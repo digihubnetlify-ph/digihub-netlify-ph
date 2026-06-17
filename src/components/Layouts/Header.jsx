@@ -7,7 +7,7 @@ import { useCart } from "../../context";
 
 export const Header = () => {
   const { cartList } = useCart();
-  const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem("darkMode")) || false);
+ const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem("darkMode")) ?? true);
   const [searchSection, setSearchSection] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const token = JSON.parse(sessionStorage.getItem("token"));
