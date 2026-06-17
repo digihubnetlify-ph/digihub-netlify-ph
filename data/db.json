@@ -1,0 +1,500 @@
+{
+  "products": [
+    {
+      "id": 10001,
+      "name": "The Rip",
+      "overview": "Two Miami cops uncover millions in a cartel raid and must figure out who they can trust before it all explodes.",
+      "long_description": "Joe Carnahan directs this gritty Netflix action thriller starring Matt Damon and Ben Affleck as longtime Miami cops whose loyalty is shattered when a cartel raid uncovers millions in dirty cash. Paranoia, betrayal, and high-stakes pursuit drive this pulse-pounding thriller that keeps you guessing until the final shot. One of the best films of 2026.",
+      "price": 12,
+      "poster": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+      "image_local": "/assets/images/10001.avif",
+      "rating": 5,
+      "in_stock": true,
+      "size": 2,
+      "best_seller": true,
+      "genre": "Action",
+      "year": 2026,
+      "director": "Joe Carnahan",
+      "cast": [
+        "Matt Damon",
+        "Ben Affleck"
+      ],
+      "platform": "Netflix"
+    },
+    {
+      "id": 10002,
+      "name": "The Wrecking Crew",
+      "overview": "Two unstoppable forces collide in this explosive Prime Video action vehicle packed with bone-crunching combat.",
+      "long_description": "Jason Momoa and Dave Bautista team up in this relentless action film that puts sheer muscle and firepower front and center. When a criminal syndicate targets the wrong men, the duo tears through the city in a high-octane rampage of revenge and destruction. Pure adrenaline from start to finish.",
+      "price": 10,
+      "poster": "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+      "image_local": "/assets/images/10002.avif",
+      "rating": 4,
+      "in_stock": true,
+      "size": 2,
+      "best_seller": false,
+      "genre": "Action",
+      "year": 2026,
+      "director": "TBA",
+      "cast": [
+        "Jason Momoa",
+        "Dave Bautista"
+      ],
+      "platform": "Amazon Prime Video"
+    },
+    {
+      "id": 10003,
+      "name": "Avengers: Doomsday",
+      "overview": "Earth's mightiest heroes face their greatest threat in this monumental Marvel crossover that rewrites the MCU forever.",
+      "long_description": "The Russo Brothers return to helm the most ambitious Marvel event yet. When a god-like villain tears open the boundaries of reality itself, every hero across the multiverse must unite. Avengers: Doomsday is a jaw-dropping spectacle packed with shocking twists, emotional farewells, and universe-altering consequences.",
+      "price": 15,
+      "poster": "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+      "image_local": "/assets/images/10003.avif",
+      "rating": 5,
+      "in_stock": true,
+      "size": 3,
+      "best_seller": true,
+      "genre": "Action",
+      "year": 2026,
+      "director": "The Russo Brothers",
+      "cast": [
+        "Robert Downey Jr.",
+        "Chris Evans",
+        "Scarlett Johansson"
+      ],
+      "platform": "Theaters"
+    },
+    {
+      "id": 10004,
+      "name": "Colony",
+      "overview": "From the director of Train to Busan — a mutating virus traps survivors inside a biotech facility with the horrifying infected.",
+      "long_description": "Horror master Yeon Sang-ho returns with a terrifying Korean zombie thriller. When a rapidly mutating virus is released during a high-profile biotech conference, the entire building is sealed shut. Professor Se-jeong (Jun Ji-hyun) must lead a small group of survivors against the increasingly grotesque infected — with no hope of rescue. A relentless nightmare.",
+      "price": 11,
+      "poster": "https://images.unsplash.com/photo-1554941829-202a0b2403b8?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+      "image_local": "/assets/images/10004.avif",
+      "rating": 5,
+      "in_stock": true,
+      "size": 2,
+      "best_seller": true,
+      "genre": "Horror",
+      "year": 2026,
+      "director": "Yeon Sang-ho",
+      "cast": [
+        "Jun Ji-hyun",
+        "Ji Chang-wook",
+        "Koo Kyo-hwan"
+      ],
+      "platform": "Theaters"
+    },
+    {
+      "id": 10005,
+      "name": "Send Help",
+      "overview": "Stranded on a remote island after a plane crash, a woman and her infuriating boss must survive the wilderness — and each other.",
+      "long_description": "Director Sam Raimi brings his signature unhinged energy to this survival thriller. Rachel McAdams plays Linda Liddle, a professional whose plane goes down over a remote island alongside her insufferable boss Bradley (Dylan O'Brien). What starts as a will-to-survive story twists into something far darker and stranger as secrets surface and trust dissolves.",
+      "price": 12,
+      "poster": "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+      "image_local": "/assets/images/10005.avif",
+      "rating": 4,
+      "in_stock": true,
+      "size": 2,
+      "best_seller": false,
+      "genre": "Thriller",
+      "year": 2026,
+      "director": "Sam Raimi",
+      "cast": [
+        "Rachel McAdams",
+        "Dylan O'Brien"
+      ],
+      "platform": "Theaters"
+    },
+    {
+      "id": 10006,
+      "name": "The Drama",
+      "overview": "Zendaya and Robert Pattinson play a celebrity couple whose passionate but volatile relationship unravels very publicly.",
+      "long_description": "Two of Hollywood's biggest stars ignite the screen in this bold, emotionally charged romance. As their characters navigate fame, love, and a very public breakdown, The Drama digs deep into what it means to love someone when the whole world is watching. Stunning performances anchor this raw and unforgettable film.",
+      "price": 13,
+      "poster": "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+      "image_local": "/assets/images/10006.avif",
+      "rating": 5,
+      "in_stock": true,
+      "size": 2,
+      "best_seller": false,
+      "genre": "Romance",
+      "year": 2026,
+      "director": "TBA",
+      "cast": [
+        "Zendaya",
+        "Robert Pattinson"
+      ],
+      "platform": "Theaters"
+    },
+    {
+      "id": 10007,
+      "name": "Scream 7",
+      "overview": "A new Ghostface emerges targeting Sidney Prescott's daughter, pulling the legendary survivor back into her worst nightmare.",
+      "long_description": "Kevin Williamson returns to direct this long-awaited chapter in the Scream saga. Neve Campbell reprises her iconic role as Sidney Prescott, now living quietly — until a new Ghostface begins stalking her daughter. Tense, terrifying, and packed with the franchise's signature meta-horror wit, Scream 7 is a worthy successor.",
+      "price": 12,
+      "poster": "https://images.unsplash.com/photo-1572177812156-58036aae439c?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+      "image_local": "/assets/images/10007.avif",
+      "rating": 4,
+      "in_stock": true,
+      "size": 2,
+      "best_seller": false,
+      "genre": "Thriller",
+      "year": 2026,
+      "director": "Kevin Williamson",
+      "cast": [
+        "Neve Campbell",
+        "Courteney Cox",
+        "Isabel May"
+      ],
+      "platform": "Theaters"
+    },
+    {
+      "id": 10008,
+      "name": "Spider-Man: Brand New Day",
+      "overview": "Peter Parker starts fresh in an explosive new chapter that challenges everything he thought he knew about being Spider-Man.",
+      "long_description": "Tom Holland swings back in this thrilling new era for everyone's favorite web-slinger. After the events that reshaped his life, Peter Parker must rebuild — but a dangerous new enemy has other plans. Brand New Day is a spectacular, emotionally rich adventure that cements Holland's Spider-Man as one of cinema's most beloved heroes.",
+      "price": 15,
+      "poster": "https://images.unsplash.com/photo-1531259683007-016a7b628fc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+      "image_local": "/assets/images/10008.avif",
+      "rating": 5,
+      "in_stock": true,
+      "size": 3,
+      "best_seller": true,
+      "genre": "Action",
+      "year": 2026,
+      "director": "TBA",
+      "cast": [
+        "Tom Holland"
+      ],
+      "platform": "Theaters"
+    },
+    {
+      "id": 10009,
+      "name": "Clayface",
+      "overview": "A chilling DC body horror film exploring the grotesque and tragic transformation of one of Batman's most disturbing villains.",
+      "long_description": "Director James Watkins takes the DC universe into genuinely horrifying territory with this dark origin story. Tom Rhys Harries delivers a haunting performance as Basil Karlo, a man whose body begins to melt and reshape in terrifying ways. Naomi Ackie and Max Minghella co-star in a film that blurs the line between superhero and monster movie.",
+      "price": 13,
+      "poster": "https://images.unsplash.com/photo-1559583985-c80d8ad9b29f?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+      "image_local": "/assets/images/10009.avif",
+      "rating": 4,
+      "in_stock": true,
+      "size": 2,
+      "best_seller": false,
+      "genre": "Horror",
+      "year": 2026,
+      "director": "James Watkins",
+      "cast": [
+        "Tom Rhys Harries",
+        "Naomi Ackie",
+        "Max Minghella"
+      ],
+      "platform": "Theaters"
+    },
+    {
+      "id": 10010,
+      "name": "Reminders of Him",
+      "overview": "A woman released from prison finds unexpected love while fighting to reconnect with her estranged daughter.",
+      "long_description": "Based on Colleen Hoover's beloved novel, Reminders of Him stars Maika Monroe as Kenna, a young woman stepping out of prison desperate to rebuild a relationship with the daughter she never knew. When she meets local bar owner Ledger (Tyriq Withers), an unexpected and complicated romance blooms. A deeply emotional and heartfelt story of second chances.",
+      "price": 11,
+      "poster": "https://images.unsplash.com/photo-1596727147705-61a532a659bd?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+      "image_local": "/assets/images/10010.avif",
+      "rating": 5,
+      "in_stock": true,
+      "size": 2,
+      "best_seller": false,
+      "genre": "Romance",
+      "year": 2026,
+      "director": "TBA",
+      "cast": [
+        "Maika Monroe",
+        "Tyriq Withers"
+      ],
+      "platform": "Theaters"
+    },
+    {
+      "id": 10011,
+      "name": "Verity",
+      "overview": "A ghostwriter hired for a famous author discovers chilling autobiographical notes revealing dark and horrifying secrets.",
+      "long_description": "Adapted from Colleen Hoover's darkest thriller, Verity follows struggling writer Lowen Ashleigh who accepts a dream job ghostwriting for renowned author Verity Crawford. But when she discovers a disturbing manuscript hidden in the house — one that reads like a confession — Lowen must decide if she can trust what she's read or the man she's falling for.",
+      "price": 12,
+      "poster": "https://images.unsplash.com/photo-1580130544977-b0456d38a0e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+      "image_local": "/assets/images/10011.avif",
+      "rating": 4,
+      "in_stock": true,
+      "size": 2,
+      "best_seller": false,
+      "genre": "Suspense",
+      "year": 2026,
+      "director": "TBA",
+      "cast": [
+        "TBA"
+      ],
+      "platform": "Theaters"
+    },
+    {
+      "id": 10012,
+      "name": "Time of Death",
+      "overview": "A detective accused of killing his wife has 90 minutes to prove his innocence to an advanced AI judge before the verdict locks in.",
+      "long_description": "Set in a near-future where AI has taken over the judiciary, Chris Pratt plays Detective Harlan Cross — a man framed for his wife's murder with nothing but 90 minutes on the clock and an algorithm as his judge. Director Timur Bekmambetov delivers a breathless, high-concept thriller that questions justice, technology, and truth in equal measure.",
+      "price": 13,
+      "poster": "https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+      "image_local": "/assets/images/10012.avif",
+      "rating": 4,
+      "in_stock": true,
+      "size": 2,
+      "best_seller": false,
+      "genre": "Suspense",
+      "year": 2026,
+      "director": "Timur Bekmambetov",
+      "cast": [
+        "Chris Pratt",
+        "Rebecca Ferguson"
+      ],
+      "platform": "Theaters"
+    },
+    {
+      "id": 10013,
+      "name": "People We Meet on Vacation",
+      "overview": "Two best friends with opposite personalities share one summer vacation a year — until a decade of feelings they can't ignore finally surfaces.",
+      "long_description": "Based on Emily Henry's beloved novel, this Netflix romance follows Poppy (Emily Bader) and Alex (Tom Blyth) — best friends who are everything the other isn't. For ten summers, one week together has been enough. But their most recent trip changes everything. Funny, heartfelt, and achingly romantic.",
+      "price": 10,
+      "poster": "https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+      "image_local": "/assets/images/10013.avif",
+      "rating": 5,
+      "in_stock": true,
+      "size": 2,
+      "best_seller": false,
+      "genre": "Romance",
+      "year": 2026,
+      "director": "Brett Haley",
+      "cast": [
+        "Emily Bader",
+        "Tom Blyth",
+        "Sarah Catherine Hook"
+      ],
+      "platform": "Netflix"
+    },
+    {
+      "id": 10014,
+      "name": "Wuthering Heights",
+      "overview": "A sweeping reimagining of the classic gothic romance following Agnes and William across distance, silence, and grief.",
+      "long_description": "Director Chloé Zhao brings a visually breathtaking and emotionally devastating new vision of Emily Brontë's timeless novel. Set in 16th-century England, Jessie Buckley and Paul Mescal deliver mesmerizing performances as two souls bound by a love that outlasts time, distance, and heartbreak. Haunting and beautiful.",
+      "price": 12,
+      "poster": "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+      "image_local": "/assets/images/10014.avif",
+      "rating": 4,
+      "in_stock": false,
+      "size": 2,
+      "best_seller": false,
+      "genre": "Romance",
+      "year": 2026,
+      "director": "Chloé Zhao",
+      "cast": [
+        "Jessie Buckley",
+        "Paul Mescal"
+      ],
+      "platform": "Theaters"
+    },
+    {
+      "id": 10015,
+      "name": "Corporate Retreat",
+      "overview": "A company team-building retreat turns into a terrifying fight for survival when the isolated lodge hides a deadly secret.",
+      "long_description": "Five colleagues arrive at a remote woodland lodge for a mandatory retreat. But when night falls, something is very wrong with the place — and their host. Director Aaron Fisher delivers a lean, mean horror-thriller with sharp performances from Odeya Rush, Zion Moreno, and Ashton Sanders as coworkers who must set aside office politics to simply stay alive.",
+      "price": 10,
+      "poster": "https://images.unsplash.com/photo-1603190287605-e6ade32fa852?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+      "image_local": "/assets/images/10015.avif",
+      "rating": 3,
+      "in_stock": false,
+      "size": 2,
+      "best_seller": false,
+      "genre": "Horror",
+      "year": 2026,
+      "director": "Aaron Fisher",
+      "cast": [
+        "Odeya Rush",
+        "Zion Moreno",
+        "Ashton Sanders"
+      ],
+      "platform": "Theaters"
+    }
+  ],
+  "featured_products": [
+    {
+      "id": 10003,
+      "name": "Avengers: Doomsday",
+      "overview": "Earth's mightiest heroes face their greatest threat in this monumental Marvel crossover that rewrites the MCU forever.",
+      "long_description": "The Russo Brothers return to helm the most ambitious Marvel event yet. When a god-like villain tears open the boundaries of reality itself, every hero across the multiverse must unite. Avengers: Doomsday is a jaw-dropping spectacle packed with shocking twists, emotional farewells, and universe-altering consequences.",
+      "price": 15,
+      "poster": "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+      "image_local": "/assets/images/10003.avif",
+      "rating": 5,
+      "in_stock": true,
+      "size": 3,
+      "best_seller": true,
+      "genre": "Action",
+      "year": 2026,
+      "director": "The Russo Brothers",
+      "cast": [
+        "Robert Downey Jr.",
+        "Chris Evans",
+        "Scarlett Johansson"
+      ],
+      "platform": "Theaters"
+    },
+    {
+      "id": 10008,
+      "name": "Spider-Man: Brand New Day",
+      "overview": "Peter Parker starts fresh in an explosive new chapter that challenges everything he thought he knew about being Spider-Man.",
+      "long_description": "Tom Holland swings back in this thrilling new era for everyone's favorite web-slinger. After the events that reshaped his life, Peter Parker must rebuild — but a dangerous new enemy has other plans. Brand New Day is a spectacular, emotionally rich adventure that cements Holland's Spider-Man as one of cinema's most beloved heroes.",
+      "price": 15,
+      "poster": "https://images.unsplash.com/photo-1531259683007-016a7b628fc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+      "image_local": "/assets/images/10008.avif",
+      "rating": 5,
+      "in_stock": true,
+      "size": 3,
+      "best_seller": true,
+      "genre": "Action",
+      "year": 2026,
+      "director": "TBA",
+      "cast": [
+        "Tom Holland"
+      ],
+      "platform": "Theaters"
+    },
+    {
+      "id": 10001,
+      "name": "The Rip",
+      "overview": "Two Miami cops uncover millions in a cartel raid and must figure out who they can trust before it all explodes.",
+      "long_description": "Joe Carnahan directs this gritty Netflix action thriller starring Matt Damon and Ben Affleck as longtime Miami cops whose loyalty is shattered when a cartel raid uncovers millions in dirty cash. Paranoia, betrayal, and high-stakes pursuit drive this pulse-pounding thriller that keeps you guessing until the final shot.",
+      "price": 12,
+      "poster": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+      "image_local": "/assets/images/10001.avif",
+      "rating": 5,
+      "in_stock": true,
+      "size": 2,
+      "best_seller": true,
+      "genre": "Action",
+      "year": 2026,
+      "director": "Joe Carnahan",
+      "cast": [
+        "Matt Damon",
+        "Ben Affleck"
+      ],
+      "platform": "Netflix"
+    }
+  ],
+  "orders": [
+    {
+      "cartList": [
+        {
+          "id": 10003,
+          "name": "Avengers: Doomsday",
+          "overview": "Earth's mightiest heroes face their greatest threat in this monumental Marvel crossover that rewrites the MCU forever.",
+          "long_description": "The Russo Brothers return to helm the most ambitious Marvel event yet.",
+          "price": 15,
+          "poster": "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+          "image_local": "/assets/images/10003.avif",
+          "rating": 5,
+          "in_stock": true,
+          "size": 3,
+          "best_seller": true,
+          "genre": "Action",
+          "year": 2026
+        },
+        {
+          "id": 10008,
+          "name": "Spider-Man: Brand New Day",
+          "overview": "Peter Parker starts fresh in an explosive new chapter.",
+          "long_description": "Tom Holland swings back in this thrilling new era for everyone's favorite web-slinger.",
+          "price": 15,
+          "poster": "https://images.unsplash.com/photo-1531259683007-016a7b628fc3?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+          "image_local": "/assets/images/10008.avif",
+          "rating": 5,
+          "in_stock": true,
+          "size": 3,
+          "best_seller": true,
+          "genre": "Action",
+          "year": 2026
+        }
+      ],
+      "amount_paid": 30,
+      "quantity": 2,
+      "user": {
+        "name": "flo",
+        "email": "floespiritu@example.com",
+        "id": 1
+      },
+      "id": 1
+    },
+    {
+      "cartList": [
+        {
+          "id": 10001,
+          "name": "The Rip",
+          "overview": "Two Miami cops uncover millions in a cartel raid.",
+          "long_description": "Joe Carnahan directs this gritty Netflix action thriller starring Matt Damon and Ben Affleck.",
+          "price": 12,
+          "poster": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+          "image_local": "/assets/images/10001.avif",
+          "rating": 5,
+          "in_stock": true,
+          "size": 2,
+          "best_seller": true,
+          "genre": "Action",
+          "year": 2026
+        }
+      ],
+      "amount_paid": 12,
+      "quantity": 1,
+      "user": {
+        "name": "flo",
+        "email": "floespiritu@example.com",
+        "id": 1
+      },
+      "id": 2
+    },
+    {
+      "cartList": [
+        {
+          "id": 10006,
+          "name": "The Drama",
+          "overview": "Zendaya and Robert Pattinson play a celebrity couple whose passionate relationship unravels publicly.",
+          "long_description": "Two of Hollywood's biggest stars ignite the screen in this bold, emotionally charged romance.",
+          "price": 13,
+          "poster": "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=40",
+          "image_local": "/assets/images/10006.avif",
+          "rating": 5,
+          "in_stock": true,
+          "size": 2,
+          "best_seller": false,
+          "genre": "Romance",
+          "year": 2026
+        }
+      ],
+      "amount_paid": 13,
+      "quantity": 1,
+      "user": {
+        "name": "flo",
+        "email": "floespiritu@example.com",
+        "id": 1
+      },
+      "id": 3
+    }
+  ],
+  "users": [
+    {
+      "email": "floespiritu@example.com",
+      "password": "$2a$10$4losFFRL9m6sGih0v5kOHO16GnhYgdpcf3msupQineOVXhp7fAyEm",
+      "name": "flo",
+      "id": 1
+    },
+    {
+      "email": "flodev@example.ph.com",
+      "password": "$2a$10$upVI39xxfunDQMp7kBUJve2ImRzxjJJGvgeusqaLWCjYoArSoxLDW",
+      "name": "flo2",
+      "id": 2
+    }
+  ]
+}
