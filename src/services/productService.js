@@ -25,8 +25,9 @@ export async function getProduct(id) {
 
 export async function getFeaturedList() {
   const { data, error } = await supabase
-    .from('featured_products')
+    .from('products')
     .select('*')
+    .eq('best_seller', true)
 
   if (error) throw { message: error.message }
   return data

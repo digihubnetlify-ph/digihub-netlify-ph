@@ -28,7 +28,7 @@ export const DashboardPage = () => {
       </section>
 
       <section>
-        { orders.length && orders.map((order) => (
+       { orders.length > 0 && orders.map((order) => (
           <DashboardCard key={order.id} order={order} />
         )) }
       </section>

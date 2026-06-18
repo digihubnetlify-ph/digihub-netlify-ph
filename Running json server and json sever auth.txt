@@ -11,3 +11,5 @@
  json-server data/db.json -m ./node_modules/json-server-auth -r data/routes.json --port 8000
 
  npx json-server data/db.json -m ./node_modules/json-server-auth -r data/routes.json --port 8000
+
+ supabase functions deploy paymongo-payment

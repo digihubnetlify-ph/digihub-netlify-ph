@@ -7,7 +7,7 @@ export const DashboardCard = ({order}) => {
             <span>Order Id: {order.id}</span>
             <span>Total: ₱{order.amount_paid.toLocaleString()}</span>
         </div>
-        { order.cartList.map((product) => (
+        { order.cart_list.map((product) => (
             <div key={product.id} className="flex flex-wrap justify-between max-w-4xl m-auto p-2 my-5 ">
                 <div className="flex">
                     <Link to={`/products/${product.id}`}>

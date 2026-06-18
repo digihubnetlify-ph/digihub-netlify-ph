@@ -55,10 +55,11 @@ export const Header = () => {
               className="cursor-pointer text-xl text-gray-700 dark:text-white bi bi-gear-wide-connected"></span> */}
 
               <span 
-               onClick={() => setDarkMode(!darkMode)} 
-                 className={`cursor-pointer text-xl text-gray-700 dark:text-white flex items-center justify-center w-6 h-6
-                  ${darkMode ? "bi bi-moon" : "bi bi-sun"}`}
-                  ></span>
+              onClick={() => setDarkMode(!darkMode)} 
+              className={`cursor-pointer text-xl text-gray-700 dark:text-white flex items-center justify-center w-6 h-6
+              ${darkMode ? "bi bi-moon" : "bi bi-sun"}`}
+              title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            ></span>
 
 
         
