@@ -75,6 +75,7 @@ export const Checkout = ({ setCheckout }) => {
     { id: "gcash", label: "GCash", icon: "bi bi-wallet2", color: "bg-blue-500" },
     { id: "paymaya", label: "Maya", icon: "bi bi-phone", color: "bg-green-500" },
     { id: "card", label: "Credit / Debit Card", icon: "bi bi-credit-card", color: "bg-gray-700" },
+    { id: "qrph", label: "QR Ph (GCash, Maya, BPI, BDO +30 more)", icon: "bi bi-qr-code", color: "bg-orange-500" },
   ];
 
   return (

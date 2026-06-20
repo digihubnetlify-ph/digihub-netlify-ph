@@ -11,18 +11,12 @@ serve(async (req) => {
   }
 
   try {
-    const { amount, description, payment_method, success_url, cancel_url, name, email } = await req.json();
+    const { amount, description, success_url, cancel_url, name, email } = await req.json();
 
     const secretKey = Deno.env.get("PAYMONGO_SECRET_KEY");
 
-    // Build allowed payment method types
-    const methodMap: Record<string, string[]> = {
-      gcash:   ["gcash"],
-      paymaya: ["paymaya"],
-      card:    ["card"],
-      qrph:    ["qrph"],
-    };
-    const payment_method_types = methodMap[payment_method] ?? ["gcash", "paymaya", "card"];
+    // Always show all payment methods so customers can switch on PayMongo's page
+    const payment_method_types = ["gcash", "paymaya", "card", "qrph"];
 
     const body = {
       data: {

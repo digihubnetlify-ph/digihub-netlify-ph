@@ -61,3 +61,31 @@ export async function createOrder(cartList, total, user) {
   if (error) throw { message: error.message }
   return data[0]
 }
+export async function getLatestOrder() {
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw { message: "Not logged in" }
+
+  const { data, error } = await supabase
+    .from('orders')
+    .select('*')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single()
+
+  if (error) throw { message: error.message }
+
+  const { data: products, error: prodError } = await supabase
+    .from('products')
+    .select('id, download_url')
+
+  if (prodError) throw { message: prodError.message }
+
+  return {
+    ...data,
+    cart_list: data.cart_list.map(item => ({
+      ...item,
+      dlUrl: products.find(p => p.id === item.id)?.download_url || null
+    }))
+  }
+}

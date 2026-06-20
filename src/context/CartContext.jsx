@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, useEffect } from "react";
 import { cartReducer } from "../reducers";
 
 const cartInitialState = {
@@ -6,10 +6,23 @@ const cartInitialState = {
     total: 0
 }
 
+function loadCartFromStorage() {
+    try {
+        const saved = localStorage.getItem("dm_cart");
+        return saved ? JSON.parse(saved) : cartInitialState;
+    } catch {
+        return cartInitialState;
+    }
+}
+
 const CartContext = createContext(cartInitialState);
 
 export const CartProvider = ({children}) => {
-    const [state, dispatch] = useReducer(cartReducer, cartInitialState);
+    const [state, dispatch] = useReducer(cartReducer, loadCartFromStorage());
+
+    useEffect(() => {
+        localStorage.setItem("dm_cart", JSON.stringify(state));
+    }, [state]);
 
     function addToCart(product){
         const updatedList = state.cartList.concat(product);
