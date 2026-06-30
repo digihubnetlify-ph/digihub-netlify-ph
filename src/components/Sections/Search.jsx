@@ -26,12 +26,20 @@ export const Search = ({setSearchSection}) => {
                   name="search"
                   type="text"
                   id="simple-search"
+<<<<<<< HEAD
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+=======
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+>>>>>>> 83030d1282dee3484d05b26f8f0cddc769055c23
                   placeholder="Search music, movies, videos, tutorials..."
                   autoComplete="off"
                 />
             </div>
+<<<<<<< HEAD
             <button type="submit" className="bi bi-search py-2.5 px-3 ml-2 text-sm font-medium text-white bg-violet-500 rounded-sm border border-violet-500 hover:bg-violet-600 focus:ring-4 focus:outline-none focus:ring-violet-300 dark:bg-violet-600 dark:hover:bg-violet-500 dark:focus:ring-violet-800 transition-colors">
+=======
+            <button type="submit" className="bi bi-search py-2.5 px-3 ml-2 text-sm font-medium text-white bg-violet-500 rounded-lg border border-violet-500 hover:bg-violet-600 focus:ring-4 focus:outline-none focus:ring-violet-300 dark:bg-violet-600 dark:hover:bg-violet-500 dark:focus:ring-violet-800 transition-colors">
+>>>>>>> 83030d1282dee3484d05b26f8f0cddc769055c23
             </button>
         </form>
     </div>

@@ -11,6 +11,7 @@ export const Header = () => {
   const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem("darkMode")) ?? true);
   const [searchSection, setSearchSection] = useState(true);
   const [dropdown, setDropdown] = useState(false);
+<<<<<<< HEAD
   // FIX: use Supabase session instead of sessionStorage for auth state
   const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem("token"));
   const dropdownRef = useRef(null);
@@ -43,6 +44,10 @@ export const Header = () => {
 
     return () => subscription.unsubscribe();
   }, []);
+=======
+  const token = JSON.parse(sessionStorage.getItem("token"));
+  const dropdownRef = useRef(null);
+>>>>>>> 83030d1282dee3484d05b26f8f0cddc769055c23
 
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(darkMode));
@@ -80,6 +85,10 @@ export const Header = () => {
             {/* Logo + Brand */}
             <Link to="/" className="flex items-center gap-1 min-w-0 flex-shrink">
               <img src={Logo} className="h-8 sm:h-17 flex-shrink-0" alt="Digital Movies Logo" />
+<<<<<<< HEAD
+=======
+
+>>>>>>> 83030d1282dee3484d05b26f8f0cddc769055c23
               <span
                 className="text-sm sm:text-2xl font-bold truncate"
                 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: "-0.02em" }}
@@ -88,10 +97,12 @@ export const Header = () => {
                 <span className="text-gray-900 dark:text-gray-100">Hub</span>
                 <span className="text-red-600">PH</span>
               </span>
+
             </Link>
 
             {/* Right Side Icons */}
             <div className="flex flex-row items-center gap-3 sm:gap-5 flex-shrink-0 relative">
+<<<<<<< HEAD
 
               {/* Dark Mode Toggle */}
               <button
@@ -155,6 +166,60 @@ export const Header = () => {
               )}
 
             </div>
+=======
+
+              {/* Dark Mode Toggle */}
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                title={darkMode ? "Light Mode" : "Dark Mode"}
+                className="cursor-pointer flex flex-col items-center justify-center gap-0.5 w-10 text-gray-700 dark:text-white bg-transparent border-none"
+              >
+                <span className={`text-xl flex items-center justify-center ${darkMode ? "bi bi-moon" : "bi bi-sun"}`}></span>
+                <span className="text-[10px] leading-none text-center w-full">{darkMode ? "Dark" : "Light"}</span>
+              </button>
+
+              {/* Search */}
+              <button
+                onClick={() => setSearchSection(!searchSection)}
+                title="Search"
+                className="cursor-pointer flex flex-col items-center justify-center gap-0.5 w-10 text-gray-700 dark:text-white bg-transparent border-none"
+              >
+                <span className="text-xl bi bi-search flex items-center justify-center"></span>
+                <span className="text-[10px] leading-none text-center w-full">Search</span>
+              </button>
+
+              {/* Cart */}
+              <Link to="/cart" title="Cart" className="flex flex-col items-center justify-center gap-0.5 w-10 text-gray-700 dark:text-white">
+                <span className="relative inline-flex items-center justify-center w-6 h-6">
+                  <span className="text-xl bi bi-cart-fill"></span>
+                  {cartList.length > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">
+                      {cartList.length}
+                    </span>
+                  )}
+                </span>
+                <span className="text-[10px] leading-none text-center w-full">Cart</span>
+              </Link>
+
+              {/* Account */}
+              <div ref={dropdownRef} className="relative flex flex-col items-center justify-center">
+                <button
+                  onClick={() => setDropdown(!dropdown)}
+                  title="Account"
+                  className="cursor-pointer flex flex-col items-center justify-center gap-0.5 w-10 text-gray-700 dark:text-white bg-transparent border-none"
+                >
+                  <span className="bi bi-person-circle text-xl flex items-center justify-center"></span>
+                  <span className="text-[10px] leading-none text-center w-full">Account</span>
+                </button>
+
+                {dropdown && (token ?
+                  <DropdownLoggedIn setDropdown={setDropdown} /> :
+                  <DropdownLoggedOut setDropdown={setDropdown} />)}
+              </div>
+
+            </div>
+
+>>>>>>> 83030d1282dee3484d05b26f8f0cddc769055c23
           </div>
         </nav>
       </header>

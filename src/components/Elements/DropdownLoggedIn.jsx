@@ -36,6 +36,7 @@ export const DropdownLoggedIn = ({ setDropdown }) => {
 
   return (
     <div id="dropdownAvatar" className="select-none absolute top-12 right-0 z-50 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+<<<<<<< HEAD
       <div className="py-3 px-4 text-sm text-gray-900 dark:text-white">
         <div className="font-medium truncate">{displayName}</div>
         {/* Show name below if it's different from displayName */}
@@ -71,6 +72,22 @@ export const DropdownLoggedIn = ({ setDropdown }) => {
           Log out
         </span>
       </div>
+=======
+        <div className="py-3 px-4 text-sm text-gray-900 dark:text-white">
+            <div className="font-medium truncate">{user.email}</div>
+        </div>
+        <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
+            <li>
+                <Link onClick={() => setDropdown(false)} to="/products" className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">All Movies</Link>
+            </li>
+            <li>
+                <Link onClick={() => setDropdown(false)} to="/dashboard" className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</Link>
+            </li>
+        </ul>
+        <div className="py-1">
+            <span onClick={handleLogout} className="cursor-pointer block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Log out</span>
+        </div>
+>>>>>>> 83030d1282dee3484d05b26f8f0cddc769055c23
     </div>
   );
 };
