@@ -12,7 +12,6 @@ export const Hero = () => {
   }
 
   return (
-<<<<<<< HEAD
     <section className="flex flex-col lg:flex-row dark:text-red-100 items-center gap-10">
 
       <div className="text my-5 flex-1">
@@ -21,28 +20,6 @@ export const Hero = () => {
         <h1 className="text-5xl font-bold text-center lg:text-left dark:text-slate-100 leading-tight">
           Movies, Music, Videos & — More.
         </h1>
-=======
-    <section className="flex flex-col lg:flex-row dark:text-red-100 items-center">
-        <div className="text my-5">
-            <h1 className="text-5xl font-bold text-center lg:text-left dark:text-slate-100">
-                  Movies, Music, Videos & More — For the Whole Family.
-</h1>
-
-            <p className="text-2xl my-7 px-1 text-center lg:text-left dark:text-slate-100">
-                Download. Play. Watch. No ads, no drama — just pure entertainment.
-            </p>
-
-             
-            <div className="flex justify-center lg:justify-start">
-              
-           <Link to="/products" type="button" className="text-white bg-red-600 hover:bg-red-700
-              focus:ring-4 focus:ring-red-300 font-semibold rounded-sm text-lg px-8 py-3 mr-2 mb-2
-              dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800 tracking-wide">
-              Explore!
-           </Link>
-
-</div>
->>>>>>> 83030d1282dee3484d05b26f8f0cddc769055c23
 
         {/* Subheading */}
         <p className="text-2xl my-5 text-center lg:text-left dark:text-slate-100">
