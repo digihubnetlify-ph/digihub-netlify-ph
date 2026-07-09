@@ -13,7 +13,7 @@ export const ProductCard = ({ product, compact = false }) => {
     setInCart(!!productInCart);
   }, [cartList, product.id]);
 
-  // Compact card for Featured section in Hero
+  // Compact card for Featured section
   if (compact) {
     return (
       <div className="flex flex-col bg-white dark:bg-gray-900 rounded-lg overflow-hidden hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200 group cursor-pointer w-36">
@@ -59,7 +59,7 @@ export const ProductCard = ({ product, compact = false }) => {
     );
   }
 
-  // Full YouTube-like card for Products page
+  // Full card for Products page
   return (
     <div className="flex flex-col bg-white dark:bg-gray-900 rounded-xl overflow-hidden hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200 group cursor-pointer w-full">
       <Link to={`/products/${id}`} className="relative block overflow-hidden rounded-xl">
@@ -80,7 +80,7 @@ export const ProductCard = ({ product, compact = false }) => {
 
       <div className="flex gap-3 pt-3 px-1 pb-2">
         <div className="flex-shrink-0 w-9 h-9 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-sm">
-          DM
+          DH
         </div>
         <div className="flex-1 min-w-0">
           <Link to={`/products/${id}`}>
@@ -89,7 +89,10 @@ export const ProductCard = ({ product, compact = false }) => {
             </h3>
           </Link>
           <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-1 mb-1">
-            Digital Movies PH
+            DigiHub
+          </p>
+          <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-2">
+            {overview}
           </p>
           <div className="flex items-center gap-2">
             <Rating rating={rating} />

@@ -79,7 +79,7 @@ export const Header = () => {
 
             {/* Logo + Brand */}
             <Link to="/" className="flex items-center gap-1 min-w-0 flex-shrink">
-              <img src={Logo} className="h-8 sm:h-17 flex-shrink-0" alt="Digital Movies Logo" />
+              <img src={Logo} className="h-9 sm:h-20 flex-shrink-0" alt="Digital Movies Logo" />
               <span
                 className="text-sm sm:text-2xl font-bold truncate"
                 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: "-0.02em" }}
@@ -87,6 +87,7 @@ export const Header = () => {
                 <span className="text-red-600">Digi</span>
                 <span className="text-gray-900 dark:text-gray-100">Hub</span>
                 <span className="text-red-600">PH</span>
+                
               </span>
 
             </Link>

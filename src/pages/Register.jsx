@@ -43,8 +43,9 @@ export const Register = () => {
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
               Create an account
             </h1>
+
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-              Join <span className="text-red-600 font-semibold">DigiHub</span><span className="font-semibold dark:text-white">PH</span> today
+              Join <span className="text-red-600 font-semibold">DigiHub</span> today
             </p>
           </div>
 

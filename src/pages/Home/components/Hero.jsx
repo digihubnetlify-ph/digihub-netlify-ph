@@ -24,6 +24,7 @@ export const Hero = () => {
         {/* Subheading */}
         <p className="text-2xl my-5 text-center lg:text-left dark:text-slate-100">
           Download. Play. Watch. — No Ads.
+          {/* Download Files. Play Music. Watch Movies. */}
         </p>
 
         {/* CTA label */}

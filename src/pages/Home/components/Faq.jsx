@@ -2,26 +2,10 @@ import { Accordion } from "./Accordion";
 
 export const Faq = () => {
     const faqs = [
-        {
-          "id": 1,
-          "question": "Why should I use DigitalMovies?",
-          "answer": "DigitalMovies gives you access to the latest blockbusters, indie films, and exclusive titles all in one place. No subscriptions needed — just pay for what you want to watch. Browse our growing collection and enjoy movies at unbeatable prices!"
-        },
-        {
-          "id": 2,
-          "question": "Can I access my movies on mobile and other devices?",
-          "answer": "Yes! DigitalMovies works on all your devices — smartphones, tablets, laptops, and smart TVs. Simply log in to your account and your purchased movies will be available anytime, anywhere."
-        },
-        {
-          "id": 3,
-          "question": "How do I purchase a movie on DigitalMovies?",
-          "answer": "Purchasing is super easy! Simply browse our collection, click on the movie you want, add it to your cart, and proceed to checkout. We support multiple payment methods including credit/debit cards, GCash, and Maya. Once payment is confirmed, the movie is yours!"
-        },
-        {
-          "id": 4,
-          "question": "Do you support online payments?",
-          "answer": "Yes! We support multiple secure payment methods including credit/debit cards, GCash, Maya, and other major online payment platforms available in the Philippines."
-        }
+        { "id": 1, "question": "Why should I use DigiHub?", "answer": "DigiHub gives you access to the latest movies, music, videos, and more — all in one place. No subscriptions needed — just pay for what you want. Browse our growing collection and enjoy digital content at unbeatable prices!" },
+        { "id": 2, "question": "Can I access my purchases on mobile and other devices?", "answer": "Yes! DigiHub works on all your devices — smartphones, tablets, laptops, and smart TVs. Simply log in to your account and your purchased content will be available anytime, anywhere." },
+        { "id": 3, "question": "How do I purchase content on DigiHub?", "answer": "Purchasing is super easy! Simply browse our collection, click on the item you want, add it to your cart, and proceed to checkout. We support GCash, Maya, and QRPh. Once payment is confirmed, it's yours!" },
+        { "id": 4, "question": "Do you support online payments?", "answer": "Yes! DigiHub supports multiple secure payment methods including GCash, Maya, QRPh, and other major online payment platforms available in the Philippines." }
     ];
     
   return (
