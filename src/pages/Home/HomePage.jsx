@@ -7,7 +7,7 @@ import { Testimonials } from "./components/Testimonials";
 import { Faq } from "./components/Faq";
 
 export const HomePage = () => {
-  useTitle("Digital Movies");
+  useTitle("DigiHub");
 
   return (
     <main>

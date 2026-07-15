@@ -5,6 +5,7 @@ export { ProductDetail } from "./ProductDetail";
 export { CartPage } from "./Cart/CartPage";
 export { OrderPage } from "./Order/OrderPage";
 export { DashboardPage } from "./Dashboard/DashboardPage";
+export { AccountPage } from "./Account/AccountPage";
 
 export { Login } from "./Login";
 export { Register } from "./Register";

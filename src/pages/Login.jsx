@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
@@ -10,6 +10,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const emailOrPhone = useRef();
   const password = useRef();
+  const [showPassword, setShowPassword] = useState(false);
 
   async function handleLogin(event) {
     event.preventDefault();
@@ -82,12 +83,20 @@ export const Login = () => {
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 bi bi-lock text-gray-400 dark:text-gray-500"></span>
                 <input
                   ref={password}
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   placeholder="Your password"
                   required
-                  className="w-full pl-9 pr-4 py-2.5 text-sm rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition"
+                  className="w-full pl-9 pr-10 py-2.5 text-sm rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                >
+                  <span className={showPassword ? "bi bi-eye-slash" : "bi bi-eye"}></span>
+                </button>
               </div>
             </div>
 
