@@ -19,6 +19,8 @@ export async function getUser() {
     email: user.email || null,
     phone: user.phone || null,  // FIX: include phone for phone-only accounts
     name: user.user_metadata?.name || user.email || user.phone || 'User',
+    // Present only while a submitted email change hasn't been confirmed yet
+    pendingEmail: user.new_email || null,
   }
 }
 

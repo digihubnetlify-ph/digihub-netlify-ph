@@ -65,7 +65,7 @@ export const Register = () => {
                   type="text"
                   id="name"
                   name="name"
-                  placeholder="Juan dela Cruz"
+                  placeholder="Juan dela Cruz Jr."
                   required
                   autoComplete="off"
                   className="w-full pl-9 pr-4 py-2.5 text-sm rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition"

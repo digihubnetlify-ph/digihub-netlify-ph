@@ -82,6 +82,46 @@ export async function register(authDetail) {
   return { accessToken: data.session.access_token, user: data.user }
 }
 
+// Re-sends the confirmation link for an email change that's still pending.
+// Calling updateUser() with the same pending email again issues a fresh link.
+export async function resendEmailConfirmation(pendingEmail) {
+  const { error } = await supabase.auth.updateUser({ email: pendingEmail })
+  if (error) throw { message: error.message, status: error.status }
+  return { message: "Confirmation link resent. Please check your inbox." }
+}
+
+export async function deleteAccount() {
+  const { data: { session } } = await supabase.auth.getSession()
+
+  if (!session) {
+    throw { message: "You are not logged in." }
+  }
+
+  // Deleting a user requires the service_role key, so this is routed through
+  // an admin edge function (same pattern as the email update above).
+  const response = await fetch(`${SUPABASE_URL}/functions/v1/delete-account`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${session.access_token}`,
+    },
+  })
+
+  const result = await response.json()
+
+  if (!response.ok) {
+    throw { message: result.error || "Failed to delete account." }
+  }
+
+  // Clear local session the same way logout() does
+  await supabase.auth.signOut()
+  sessionStorage.removeItem("token")
+  sessionStorage.removeItem("cbid")
+  window.dispatchEvent(new Event("authChange"))
+
+  return result
+}
+
 export async function logout() {
   await supabase.auth.signOut()
   sessionStorage.removeItem("token")
@@ -107,25 +147,22 @@ export async function updateProfile({ name, email, phone, password }) {
     payload.password = password
   }
 
-  // Email is routed through an admin edge function so it updates instantly,
-  // bypassing Supabase's built-in confirmation-email flow (same as name/phone/password)
+  // Email changes go through Supabase's own updateUser() call, which — as
+  // long as "Secure email change" / email confirmations are enabled in the
+  // Supabase dashboard (Authentication > Emails) — sends a confirmation
+  // link to the new address instead of applying it immediately.
+  //
+  // Important: this does NOT log the user out and does NOT block login.
+  // Their current session and current email keep working exactly as
+  // before. auth.users.email only switches to the new value once they
+  // click the confirmation link. If they never click it, nothing changes
+  // and nothing breaks — the account just quietly keeps the old email.
+  let emailChangePending = false
+
   if (email) {
-    const { data: { session } } = await supabase.auth.getSession()
-
-    const response = await fetch(`${SUPABASE_URL}/functions/v1/update-email`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${session.access_token}`,
-      },
-      body: JSON.stringify({ email }),
-    })
-
-    const result = await response.json()
-
-    if (!response.ok) {
-      throw { message: result.error || "Failed to update email." }
-    }
+    const { error } = await supabase.auth.updateUser({ email })
+    if (error) throw { message: error.message, status: error.status }
+    emailChangePending = true
   }
 
   if (Object.keys(payload).length === 0 && !email) {
@@ -140,7 +177,9 @@ export async function updateProfile({ name, email, phone, password }) {
     updatedUser = data.user
   }
 
-  // Refresh the session so the client picks up the new email immediately
+  // Refresh the session to pick up any name/phone/password changes.
+  // Note: this will still show the OLD email until the confirmation
+  // link is clicked — that's expected and correct.
   const { data: { user: refreshedUser } } = await supabase.auth.getUser()
   const finalUser = updatedUser || refreshedUser
 
@@ -149,5 +188,6 @@ export async function updateProfile({ name, email, phone, password }) {
     email: finalUser.email || null,
     phone: finalUser.phone || null,
     name: finalUser.user_metadata?.name || null,
+    emailChangePending,
   }
 }

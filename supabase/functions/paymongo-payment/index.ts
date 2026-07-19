@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -11,59 +12,41 @@ serve(async (req) => {
   }
 
   try {
-    const { amount, description, success_url, cancel_url, name, email } = await req.json();
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      throw { message: "Missing authorization header." };
+    }
 
-    const secretKey = Deno.env.get("PAYMONGO_SECRET_KEY");
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
 
-    // Always show all payment methods so customers can switch on PayMongo's page
-    const payment_method_types = ["gcash", "paymaya", "card", "qrph"];
-
-    const body = {
-      data: {
-        attributes: {
-          billing: {
-            name: name ?? "Customer",
-            email: email ?? "",
-          },
-          send_email_receipt: false,
-          show_description: true,
-          show_line_items: true,
-          line_items: [
-            {
-              currency: "PHP",
-              amount: Math.round(amount * 100),
-              name: description,
-              quantity: 1,
-            },
-          ],
-          payment_method_types,
-          success_url,
-          cancel_url,
-        },
-      },
-    };
-
-    console.log("PayMongo checkout request:", JSON.stringify(body));
-
-    const response = await fetch("https://api.paymongo.com/v1/checkout_sessions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Basic ${btoa(secretKey + ":")}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
+    // Client scoped to the caller's own token, just to verify who they are
+    const callerClient = createClient(supabaseUrl, serviceRoleKey, {
+      global: { headers: { Authorization: authHeader } },
     });
 
-    const data = await response.json();
-    console.log("PayMongo response:", JSON.stringify(data));
+    const { data: { user }, error: userError } = await callerClient.auth.getUser();
+    if (userError || !user) {
+      throw { message: "You are not logged in." };
+    }
 
-    return new Response(JSON.stringify(data), {
+    // Admin client to actually delete the account
+    const adminClient = createClient(supabaseUrl, serviceRoleKey);
+
+    const { error: deleteError } = await adminClient.auth.admin.deleteUser(user.id);
+    if (deleteError) {
+      throw { message: deleteError.message };
+    }
+
+    console.log("Deleted account:", user.id);
+
+    return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
 
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
+      status: 400,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
