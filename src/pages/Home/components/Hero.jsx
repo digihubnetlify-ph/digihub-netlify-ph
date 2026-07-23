@@ -26,9 +26,14 @@ export const Hero = () => {
   }
 
   return (
-    <section className="flex flex-col lg:flex-row dark:text-red-100 items-center gap-10">
+    <section className="flex flex-col lg:flex-row dark:text-red-100 items-center gap-1 lg:gap-10 mt-0">
 
-      <div className="text my-5 flex-1">
+      {/* Logo */}
+      <div className="visual mt-0 mb-0 lg:my-5 lg:max-w-xl lg:order-last">
+        <img className="rounded-lg max-h-full" src={Logo} alt="DigiHubPH Logo" />
+      </div>
+
+      <div className="text mt-0 mb-5 lg:my-5 flex-1">
 
         {/* Main Heading */}
         <h1 className="text-5xl font-bold text-center lg:text-left dark:text-slate-100 leading-tight">
@@ -36,7 +41,7 @@ export const Hero = () => {
         </h1>
 
         {/* Subheading */}
-        <p className="text-2xl my-5 text-center lg:text-left dark:text-slate-100">
+        <p className="text-2xl mt-2 mb-5 lg:my-5 text-center lg:text-left dark:text-slate-100">
           Download. Play. Watch. — No Ads.
           {/* Download Files. Play Music. Watch Movies. */}
         </p>
@@ -79,11 +84,6 @@ export const Hero = () => {
           </Link>
         </div>
 
-      </div>
-
-      {/* Logo */}
-      <div className="visual my-5 lg:max-w-xl">
-        <img className="rounded-lg max-h-full" src={Logo} alt="DigiHubPH Logo" />
       </div>
 
     </section>
