@@ -17,7 +17,7 @@ export const Footer = () => {
             <span className="text-sm text-gray-500 dark:text-gray-300"><Link to="/" className="hover:underline">DigiHub</Link>. All Rights Reserved. © 2026.</span>
 
             <p className="text-sm text-gray-400 dark:text-gray-300 mt-3 md:mt-0 md:mx-4">
-                For Questions and Media Requests:{" "}
+                For Questions. Suggestions. Comments. and Media Requests:{" "}
                 {/* <a href={`mailto:${CONTACT_EMAIL}`} className="text-gray-500 dark:text-gray-300 hover:underline hover:text-gray-700 dark:hover:text-gray-300">
                     {CONTACT_EMAIL}
                 </a> */}
