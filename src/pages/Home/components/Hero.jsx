@@ -26,17 +26,17 @@ export const Hero = () => {
   }
 
   return (
-    <section className="flex flex-col lg:flex-row dark:text-red-100 items-center gap-1 lg:gap-10 mt-0">
+    <section className="flex flex-col lg:flex-row dark:text-red-100 items-center gap-0 lg:gap-10 mt-0">
 
       {/* Logo */}
-      <div className="visual mt-0 mb-0 lg:my-5 lg:max-w-xl lg:order-last">
-        <img className="rounded-lg max-h-full" src={Logo} alt="DigiHubPH Logo" />
+      <div className="visual w-56 mx-auto mt-0 mb-0 lg:w-auto lg:mx-0 lg:my-5 lg:max-w-xl lg:order-last">
+        <img className="rounded-lg w-full h-auto" src={Logo} alt="DigiHubPH Logo" />
       </div>
 
       <div className="text mt-0 mb-5 lg:my-5 flex-1">
 
         {/* Main Heading */}
-        <h1 className="text-5xl font-bold text-center lg:text-left dark:text-slate-100 leading-tight">
+        <h1 className="text-5xl font-bold text-center lg:text-left dark:text-slate-100 leading-tight mt-1">
           Movies, Music, Videos & — More.
         </h1>
 
@@ -54,7 +54,7 @@ export const Hero = () => {
             </p>
 
             {/* Input + button */}
-            <form onSubmit={handleGetStarted} className="flex flex-col sm:flex-row gap-3 mb-6">
+            <form onSubmit={handleGetStarted} className="flex flex-col sm:flex-row gap-3 mb-4">
               <input
                 type="text"
                 value={credential}
@@ -78,7 +78,7 @@ export const Hero = () => {
         <div className="flex justify-center lg:justify-start">
           <Link
             to="/products"
-            className="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-semibold rounded-sm text-lg px-8 py-3 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800 tracking-wide"
+            className="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-semibold rounded-sm text-lg px-8 py-3 mb-1 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800 tracking-wide"
           >
             Explore!
           </Link>

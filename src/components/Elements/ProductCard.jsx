@@ -16,10 +16,10 @@ export const ProductCard = ({ product, compact = false }) => {
   // Compact card for Featured section
   if (compact) {
     return (
-      <div className="flex flex-col bg-white dark:bg-gray-900 rounded-lg overflow-hidden hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200 group cursor-pointer w-36">
+      <div className="flex flex-col bg-white dark:bg-gray-900 rounded-lg overflow-hidden hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200 group cursor-pointer w-[calc(50%-0.375rem)] sm:w-40 md:w-44">
         <Link to={`/products/${id}`} className="relative block overflow-hidden rounded-lg">
           {best_seller && (
-            <span className="absolute top-1 left-1 z-10 px-1.5 py-0.5 bg-orange-500 text-white text-xs font-semibold rounded">
+            <span className="absolute top-1.5 left-1.5 z-10 px-2 py-0.5 bg-orange-500 text-white text-xs font-semibold rounded">
               🔥
             </span>
           )}
@@ -28,13 +28,13 @@ export const ProductCard = ({ product, compact = false }) => {
             src={poster}
             alt={name}
           />
-          <span className="absolute bottom-1 right-1 bg-black bg-opacity-80 text-white text-xs font-bold px-1.5 py-0.5 rounded">
+          <span className="absolute bottom-1.5 right-1.5 bg-black bg-opacity-80 text-white text-xs font-bold px-2 py-1 rounded">
             ₱{price.toLocaleString()}
           </span>
         </Link>
-        <div className="pt-2 px-1 pb-2">
+        <div className="pt-2.5 px-1.5 pb-2.5">
           <Link to={`/products/${id}`}>
-            <h3 className="text-xs font-semibold text-gray-900 dark:text-white line-clamp-2 leading-snug mb-1 group-hover:text-red-500 transition-colors">
+            <h3 className="text-sm sm:text-xs font-semibold text-gray-900 dark:text-white line-clamp-2 leading-snug mb-1.5 group-hover:text-red-500 transition-colors">
               {name}
             </h3>
           </Link>
@@ -42,14 +42,14 @@ export const ProductCard = ({ product, compact = false }) => {
             <button
               onClick={() => addToCart(product)}
               disabled={!product.in_stock}
-              className="w-full text-xs bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white font-medium px-2 py-1 rounded-full transition-colors mt-1"
+              className="w-full text-sm sm:text-xs bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white font-medium px-2 py-1.5 sm:py-1 rounded-full transition-colors mt-1"
             >
               <i className="bi bi-cart-plus mr-1"></i>Add
             </button>
           ) : (
             <button
               onClick={() => removeFromCart(product)}
-              className="w-full text-xs bg-gray-700 hover:bg-gray-800 text-white font-medium px-2 py-1 rounded-full transition-colors mt-1"
+              className="w-full text-sm sm:text-xs bg-gray-700 hover:bg-gray-800 text-white font-medium px-2 py-1.5 sm:py-1 rounded-full transition-colors mt-1"
             >
               <i className="bi bi-trash3 mr-1"></i>Remove
             </button>
