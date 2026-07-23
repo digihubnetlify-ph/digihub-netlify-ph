@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Logo from "../../assets/digital-movies-logo.png";
 import { Search } from "../Sections/Search";
 import { DropdownLoggedOut, DropdownLoggedIn } from "../index";
@@ -8,6 +8,8 @@ import { supabase } from "../../services/supabaseClient";
 
 export const Header = () => {
   const { cartList } = useCart();
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
   const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem("darkMode")) ?? true);
   const [searchSection, setSearchSection] = useState(true);
   const [dropdown, setDropdown] = useState(false);
@@ -78,10 +80,10 @@ export const Header = () => {
           <div className="border-b border-slate-200 dark:border-b-0 flex flex-row justify-between items-center mx-auto max-w-screen-xl px-4 md:px-6 py-3">
 
             {/* Logo + Brand */}
-            <Link to="/" className="flex items-center gap-1 min-w-0 flex-shrink">
-              <img src={Logo} className="h-9 sm:h-20 flex-shrink-0" alt="Digital Movies Logo" />
+            <Link to="/" className="flex items-center gap-1 min-w-0 flex-shrink overflow-hidden">
+              <img src={Logo} className="h-6 sm:h-20 flex-shrink-0" alt="Digital Movies Logo" />
               <span
-                className="text-sm sm:text-2xl font-bold truncate"
+                className="text-xs sm:text-2xl font-bold truncate max-w-[80px] sm:max-w-none"
                 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: "-0.02em" }}
               >
                 <span className="text-red-600">Digi</span>
@@ -93,30 +95,30 @@ export const Header = () => {
             </Link>
 
             {/* Right Side Icons */}
-            <div className="flex flex-row items-center gap-3 sm:gap-5 flex-shrink-0 relative">
+            <div className="flex flex-row items-center gap-1 sm:gap-5 flex-shrink-0 relative">
 
               {/* Dark Mode Toggle */}
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 title={darkMode ? "Light Mode" : "Dark Mode"}
-                className="cursor-pointer flex flex-col items-center justify-center gap-0.5 w-10 text-gray-700 dark:text-white bg-transparent border-none"
+                className={`${isHomePage ? "hidden sm:flex" : "flex"} cursor-pointer flex-col items-center justify-center gap-0.5 w-8 sm:w-10 text-gray-700 dark:text-white bg-transparent border-none`}
               >
                 <span className={`text-xl flex items-center justify-center ${darkMode ? "bi bi-moon" : "bi bi-sun"}`}></span>
-                <span className="text-[10px] leading-none text-center w-full">{darkMode ? "Dark" : "Light"}</span>
+                <span className="hidden sm:block text-[10px] leading-none text-center w-full">{darkMode ? "Dark" : "Light"}</span>
               </button>
 
               {/* Search */}
               <button
                 onClick={() => setSearchSection(!searchSection)}
                 title="Search"
-                className="cursor-pointer flex flex-col items-center justify-center gap-0.5 w-10 text-gray-700 dark:text-white bg-transparent border-none"
+                className={`${isHomePage ? "hidden sm:flex" : "flex"} cursor-pointer flex-col items-center justify-center gap-0.5 w-8 sm:w-10 text-gray-700 dark:text-white bg-transparent border-none`}
               >
                 <span className="text-xl bi bi-search flex items-center justify-center"></span>
-                <span className="text-[10px] leading-none text-center w-full">Search</span>
+                <span className="hidden sm:block text-[10px] leading-none text-center w-full">Search</span>
               </button>
 
               {/* Cart */}
-              <Link to="/cart" title="Cart" className="flex flex-col items-center justify-center gap-0.5 w-10 text-gray-700 dark:text-white">
+              <Link to="/cart" title="Cart" className={`${isHomePage ? "hidden sm:flex" : "flex"} flex-col items-center justify-center gap-0.5 w-8 sm:w-10 text-gray-700 dark:text-white`}>
                 <span className="relative inline-flex items-center justify-center w-6 h-6">
                   <span className="text-xl bi bi-cart-fill"></span>
                   {cartList.length > 0 && (
@@ -125,18 +127,18 @@ export const Header = () => {
                     </span>
                   )}
                 </span>
-                <span className="text-[10px] leading-none text-center w-full">Cart</span>
+                <span className="hidden sm:block text-[10px] leading-none text-center w-full">Cart</span>
               </Link>
 
               {/* Account */}
-              <div ref={dropdownRef} className="relative flex flex-col items-center justify-center">
+              <div ref={dropdownRef} className={`${isHomePage ? "hidden sm:flex" : "flex"} relative flex-col items-center justify-center`}>
                 <button
                   onClick={() => setDropdown(!dropdown)}
                   title="Account"
-                  className="cursor-pointer flex flex-col items-center justify-center gap-0.5 w-10 text-gray-700 dark:text-white bg-transparent border-none"
+                  className="cursor-pointer flex flex-col items-center justify-center gap-0.5 w-8 sm:w-10 text-gray-700 dark:text-white bg-transparent border-none"
                 >
                   <span className="bi bi-person-circle text-xl flex items-center justify-center"></span>
-                  <span className="text-[10px] leading-none text-center w-full">Account</span>
+                  <span className="hidden sm:block text-[10px] leading-none text-center w-full">Account</span>
                 </button>
 
                 {dropdown && (isLoggedIn

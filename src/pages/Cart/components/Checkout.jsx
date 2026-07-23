@@ -27,6 +27,21 @@ export const Checkout = ({ setCheckout }) => {
     fetchData();
   }, []);
 
+  // Many PH customers sign up with phone only and have no email on file.
+  // PayMongo's hosted checkout always requires an email field to be filled,
+  // so we generate a harmless placeholder from their phone number here —
+  // this pre-fills that field so the customer never has to type one in.
+  // It's only used for this payment session; it does NOT touch their real
+  // account, and since send_email_receipt is off, nothing is ever sent to it.
+  function getBillingEmail() {
+    if (user.email) return user.email;
+    if (user.phone) {
+      const digitsOnly = user.phone.replace(/\D/g, "");
+      return `${digitsOnly}@digihubph-noemail.com`;
+    }
+    return undefined;
+  }
+
   async function handlePayment() {
     if (!selectedMethod) {
       toast.error("Please select a payment method!", { position: "bottom-center" });
@@ -46,7 +61,7 @@ export const Checkout = ({ setCheckout }) => {
           success_url: `${window.location.origin}/order-summary`,
           cancel_url: `${window.location.origin}/cart`,
           name: user.name,
-          email: user.email,
+          email: getBillingEmail(),
         }),
       });
 
@@ -162,7 +177,7 @@ export const Checkout = ({ setCheckout }) => {
 
         <div className="mb-4 text-sm text-gray-500 dark:text-gray-300">
           <p>Name: <span className="font-medium text-gray-900 dark:text-white">{user.name}</span></p>
-          <p>Email: <span className="font-medium text-gray-900 dark:text-white">{user.email}</span></p>
+          <p>{user.email ? "Email" : "Mobile"}: <span className="font-medium text-gray-900 dark:text-white">{user.email || user.phone}</span></p>
         </div>
 
         <p className="mb-4 text-2xl font-semibold text-lime-500 text-center">

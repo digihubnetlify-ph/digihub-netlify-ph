@@ -86,22 +86,22 @@ export const ProductsList = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 mb-6 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex gap-1 sm:gap-2 mb-6 border-b border-gray-200 dark:border-gray-700">
         {TABS.map((tab) => {
           const count = products.filter((p) => p.type === tab.key).length;
           return (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors -mb-px
+              className={`flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-1 sm:gap-2 px-2 sm:px-4 py-2.5 text-xs sm:text-sm font-medium border-b-2 transition-colors -mb-px
                 ${activeTab === tab.key
                   ? "border-red-600 text-red-600 dark:text-red-500 dark:border-red-500"
                   : "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                 }`}
             >
-              <i className={`bi ${tab.icon}`}></i>
-              {tab.label}
-              <span className={`text-xs px-1.5 py-0.5 rounded-full font-semibold
+              <i className={`bi ${tab.icon} hidden sm:inline`}></i>
+              <span className="truncate">{tab.label}</span>
+              <span className={`text-[10px] sm:text-xs px-1 sm:px-1.5 py-0.5 rounded-full font-semibold flex-shrink-0
                 ${activeTab === tab.key
                   ? "bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-400"
                   : "bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400"
