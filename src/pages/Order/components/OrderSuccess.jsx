@@ -135,13 +135,20 @@ export const OrderSuccess = ({ data }) => {
 
                   {/* Default: show download button */}
                   {!downloadStatus[product.id] && (
-                    <button
-                      onClick={() => handleDownload(product.dlUrl, product.name, product.id)}
-                      className="flex items-center gap-3 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white text-base font-semibold px-8 py-3 rounded-xl shadow-lg transition-all w-full justify-center"
-                    >
-                      <i className="bi bi-download text-xl"></i>
-                      Download {product.name}
-                    </button>
+                    <>
+                      <button
+                        onClick={() => handleDownload(product.dlUrl, product.name, product.id)}
+                        className="flex items-center gap-3 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white text-base font-semibold px-8 py-3 rounded-xl shadow-lg transition-all w-full justify-center"
+                      >
+                        <i className="bi bi-download text-xl"></i>
+                        Download {product.name}
+                      </button>
+                      {isGoogleDrive(product.dlUrl) && (
+                        <p className="text-xs text-white mt-2 text-center">
+                          Google may show a "can't scan this file for viruses" notice — this is standard for large files and doesn't mean anything is wrong. Click "Download anyway" to continue.
+                        </p>
+                      )}
+                    </>
                   )}
 
                   {/* Downloading */}

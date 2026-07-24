@@ -5,6 +5,7 @@ import { FeaturedVideos } from "./components/FeaturedVideos";
 import { FeaturedMusic } from "./components/FeaturedMusic";
 import { Testimonials } from "./components/Testimonials";
 import { Faq } from "./components/Faq";
+import { Footer } from "../../components";
 
 export const HomePage = () => {
   useTitle("DigiHub");
@@ -17,6 +18,7 @@ export const HomePage = () => {
         <FeaturedMusic />
         <Testimonials />
         <Faq />
+        <Footer />
     </main>
   )
 }
