@@ -25,6 +25,8 @@ serve(async (req) => {
     // order row the user already owns and the live product prices.
     const { order_id, payment_method, success_url, cancel_url } = await req.json();
 
+    console.log("DEBUG received order_id:", order_id, "| typeof:", typeof order_id);
+
     if (!order_id || !payment_method || !success_url || !cancel_url) {
       return json({ error: "Missing required fields." }, 400);
     }
@@ -54,6 +56,8 @@ serve(async (req) => {
       .select("id, user_id, user_name, user_email, cart_list, status")
       .eq("id", order_id)
       .single();
+
+    console.log("DEBUG order lookup result:", JSON.stringify(order), "| error:", JSON.stringify(orderError));
 
     if (orderError || !order) {
       return json({ error: "Order not found." }, 404);
