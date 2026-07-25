@@ -62,7 +62,7 @@ export async function createOrder(cartList, total, user) {
       quantity: cartList.length,
       user_id: cbid,
       user_name: user.name,
-      user_email: user.email || user.phone || '',
+      user_email: user.email || '',
     }])
     .select()
 
