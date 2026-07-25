@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useCart } from "../../../context";
 import { createOrder, getUser } from "../../../services";
+import { supabase } from "../../../services/supabaseClient";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const GUEST_EMAIL = import.meta.env.VITE_GUEST_LOGIN;
@@ -51,17 +52,25 @@ export const Checkout = ({ setCheckout }) => {
     try {
       const order = await createOrder(cartList, total, user);
 
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session?.access_token) {
+        throw new Error("Your session has expired. Please log in again.");
+      }
+
       const response = await fetch(`${SUPABASE_URL}/functions/v1/paymongo-payment`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session.access_token}`,
+        },
         body: JSON.stringify({
-          amount: total,
-          description: `Digital Movies Order #${order.id}`,
+          order_id: order.id,
           payment_method: selectedMethod,
           success_url: `${window.location.origin}/order-summary`,
           cancel_url: `${window.location.origin}/cart`,
-          name: user.name,
-          email: getBillingEmail(),
         }),
       });
 
