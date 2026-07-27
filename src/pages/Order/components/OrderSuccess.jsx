@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react"
 import { Link } from "react-router-dom"
 import { getLatestOrder } from "../../../services"
+import { useCart } from "../../../context"
 
 // ─── Google Drive helpers ─────────────────────────────────────────────────────
 const isGoogleDrive = (url) =>
@@ -33,11 +34,23 @@ function markDownloaded(orderId, productId) {
 }
 
 export const OrderSuccess = ({ data }) => {
+  const { clearCart } = useCart()
   const [order, setOrder] = useState(data || null)
   const [loading, setLoading] = useState(!data) // skip loading spinner if data already provided
   // FIX: start empty — populate AFTER order loads using order-scoped keys
   const [downloadStatus, setDownloadStatus] = useState({})
   const hasFetched = useRef(false)
+  const hasCleared = useRef(false)
+
+  // Payment is only confirmed once this component actually renders (PayMongo
+  // redirected here after a successful payment). Clear the cart exactly once,
+  // here — never earlier — so cancelling or hitting back on PayMongo's page
+  // leaves the cart untouched.
+  useEffect(() => {
+    if (hasCleared.current) return
+    hasCleared.current = true
+    clearCart()
+  }, [])
 
   useEffect(() => {
     if (hasFetched.current) return

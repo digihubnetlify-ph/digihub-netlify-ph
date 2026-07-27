@@ -9,7 +9,7 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const GUEST_EMAIL = import.meta.env.VITE_GUEST_LOGIN;
 
 export const Checkout = ({ setCheckout }) => {
-  const { cartList, total, clearCart } = useCart();
+  const { cartList, total } = useCart();
   const [user, setUser] = useState(null); // null = still loading
   const [selectedMethod, setSelectedMethod] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -80,7 +80,9 @@ export const Checkout = ({ setCheckout }) => {
       const checkoutUrl = result?.data?.attributes?.checkout_url;
 
       if (checkoutUrl) {
-        clearCart();
+        // Cart is intentionally NOT cleared here. Clearing it now would wipe
+        // it out even if the customer cancels or hits back on PayMongo's page.
+        // It's cleared instead in OrderSuccess, once payment is confirmed.
         window.location.href = checkoutUrl;
       } else {
         const errorMsg = result?.errors?.[0]?.detail || result?.error || "Failed to create checkout session";
@@ -95,9 +97,11 @@ export const Checkout = ({ setCheckout }) => {
   }
 
   const paymentMethods = [
-    { id: "gcash",    label: "GCash",                               icon: "bi bi-wallet2",     color: "bg-blue-500"   },
-    { id: "paymaya",  label: "Maya",                                icon: "bi bi-phone",        color: "bg-green-500"  },
-    { id: "card",     label: "Credit / Debit Card",                 icon: "bi bi-credit-card",  color: "bg-gray-700"   },
+    // Disabled until approved/activated in PayMongo Dashboard (currently "Inactive" there).
+    // Just uncomment each line below once PayMongo shows it as "Active".
+    // { id: "gcash",    label: "GCash",                               icon: "bi bi-wallet2",     color: "bg-blue-500"   },
+    // { id: "paymaya",  label: "Maya",                                icon: "bi bi-phone",        color: "bg-green-500"  },
+    // { id: "card",     label: "Credit / Debit Card",                 icon: "bi bi-credit-card",  color: "bg-gray-700"   },
     { id: "qrph",     label: "QR Ph (GCash, Maya, BPI, BDO +30 more)", icon: "bi bi-qr-code", color: "bg-orange-500" },
   ];
 
