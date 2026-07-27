@@ -35,7 +35,17 @@ export const Login = () => {
       <div className="w-full max-w-md">
 
         {/* Card */}
-        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 px-8 py-10">
+        <div className="relative bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 px-8 py-10">
+
+          {/* Close button */}
+          <button
+            type="button"
+            onClick={() => navigate("/")}
+            aria-label="Close"
+            className="absolute top-4 right-4 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+          >
+            <span className="bi bi-x-lg text-xl"></span>
+          </button>
 
           {/* Header */}
           <div className="text-center mb-8">

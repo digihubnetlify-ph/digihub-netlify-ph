@@ -34,10 +34,13 @@ export const ProductCard = ({ product, compact = false }) => {
         </Link>
         <div className="pt-2.5 px-1.5 pb-2.5">
           <Link to={`/products/${id}`}>
-            <h3 className="text-sm sm:text-xs font-semibold text-gray-900 dark:text-white line-clamp-2 leading-snug mb-1.5 group-hover:text-red-500 transition-colors">
+            <h3 className="text-sm sm:text-xs font-semibold text-gray-900 dark:text-white line-clamp-2 leading-snug mb-1 group-hover:text-red-500 transition-colors">
               {name}
             </h3>
           </Link>
+          <div className="flex items-center mb-1.5">
+            <Rating rating={rating} size="text-xs" />
+          </div>
           {!inCart ? (
             <button
               onClick={() => addToCart(product)}
