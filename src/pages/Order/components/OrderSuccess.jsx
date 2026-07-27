@@ -189,9 +189,12 @@ export const OrderSuccess = ({ data }) => {
             )}
           </div>
 
-          <p className="text-sm text-gray-400 dark:text-gray-500 mt-6">
+          <p className="text-base text-gray-300 dark:text-gray-500 mt-6">
             You can also download anytime from your{" "}
             <Link to="/dashboard" className="text-blue-500 underline">Dashboard</Link>.
+          </p>
+          <p className="text-base text-gray-300 dark:text-gray-500 mt-2">
+            Please refresh/reload the download Google page if the files didn't download correctly.
           </p>
         </div>
       )}
