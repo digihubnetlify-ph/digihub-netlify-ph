@@ -70,6 +70,20 @@ export async function createOrder(cartList, total, user) {
   return data[0]
 }
 
+// Lightweight status check used for polling after a checkout redirect.
+// Only fetches the columns needed to know whether the webhook has landed
+// yet — avoids re-pulling cart_list/products on every poll tick.
+export async function getOrderStatusById(orderId) {
+  const { data, error } = await supabase
+    .from('orders')
+    .select('id, status')
+    .eq('id', orderId)
+    .single()
+
+  if (error) throw { message: error.message }
+  return data
+}
+
 export async function getLatestOrder() {
   const { data: { user }, error: userError } = await supabase.auth.getUser()
   if (userError || !user) throw { message: "Not logged in" }
