@@ -17,7 +17,7 @@ export const CartList = () => {
       
       <section>
        { cartList.map((product) => (
-        <CartCard key={product.id} product={product} />
+        <CartCard key={product.cartItemId ?? product.id} product={product} />
        )) }
       </section>
 
@@ -30,7 +30,7 @@ export const CartList = () => {
         </div>
         <div className="text-right my-5">
           <button onClick={() => setCheckout(true)} type="button" className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-base px-7 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700">
-            PLACE ORDER <i className="ml-2 bi bi-arrow-right"></i>
+            Checkout — ₱{total.toLocaleString()} <i className="ml-2 bi bi-arrow-right"></i>
           </button>
         </div>
       </section>

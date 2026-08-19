@@ -39,6 +39,7 @@ export const ProductsList = () => {
       try {
         const data = await getProductList(searchTerm);
         initialProductList(data);
+        setCurrentPage(1);
       } catch (error) {
         toast.error(error.message, { closeButton: true, position: "bottom-center" });
       } finally {
@@ -47,8 +48,6 @@ export const ProductsList = () => {
     }
     fetchProducts();
   }, [searchTerm]); //eslint-disable-line
-
-  useEffect(() => { setCurrentPage(1); }, [activeTab, products.length]);
 
   const tabProducts = products.filter((p) => p.type === activeTab);
   const totalPages = Math.ceil(tabProducts.length / ITEMS_PER_PAGE);
@@ -69,7 +68,7 @@ export const ProductsList = () => {
           <h1 className="text-xl font-bold text-gray-900 dark:text-white">
             {searchTerm ? `Results for "${searchTerm}"` : "All Media"}
           </h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-gray-500 dark:text-white">
             {loading ? (
               <span className="inline-block h-4 w-32 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
             ) : (
@@ -92,10 +91,10 @@ export const ProductsList = () => {
           return (
             <button
               key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
+              onClick={() => { setActiveTab(tab.key); setCurrentPage(1); }}
               className={`flex-1 sm:flex-none flex items-center justify-center sm:justify-start gap-1 sm:gap-2 px-2 sm:px-4 py-2.5 text-xs sm:text-sm font-medium border-b-2 transition-colors -mb-px
                 ${activeTab === tab.key
-                  ? "border-red-600 text-red-600 dark:text-red-500 dark:border-red-500"
+                  ? "border-red-400 text-red-400 dark:text-red-300 dark:border-red-300"
                   : "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                 }`}
             >
@@ -103,7 +102,7 @@ export const ProductsList = () => {
               <span className="truncate">{tab.label}</span>
               <span className={`text-[10px] sm:text-xs px-1 sm:px-1.5 py-0.5 rounded-full font-semibold flex-shrink-0
                 ${activeTab === tab.key
-                  ? "bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-400"
+                  ? "bg-red-50 text-red-400 dark:bg-red-900/40 dark:text-red-300"
                   : "bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400"
                 }`}>
                 {loading ? "…" : count}

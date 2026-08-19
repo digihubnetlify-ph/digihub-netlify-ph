@@ -1,4 +1,6 @@
+import { useState } from "react"
 import { Link } from "react-router-dom"
+import { VideoPlayerModal } from "../../../components"
 
 // Orders sit as "pending" until PayMongo's webhook confirms payment — which,
 // per the redirect-reliability issue, may land a while after (or even
@@ -15,6 +17,8 @@ const STATUS_BADGE = {
 export const DashboardCard = ({ order }) => {
   const badge = STATUS_BADGE[order.status] || STATUS_BADGE.pending
   const isPaid = order.status === "paid"
+  // { name, url } of whichever purchased title is currently playing, or null
+  const [nowPlaying, setNowPlaying] = useState(null)
 
   return (
     <div className="max-w-4xl m-auto p-2 mb-5 border dark:border-slate-700">
@@ -32,6 +36,7 @@ export const DashboardCard = ({ order }) => {
       )}
       {order.cart_list.map((product) => {
         const url = isPaid ? product.dlUrl : null;
+        const streamUrl = isPaid ? product.streamUrl : null;
         return (
           <div key={product.id} className="flex flex-wrap justify-between max-w-4xl m-auto p-2 my-5">
             <div className="flex">
@@ -47,12 +52,22 @@ export const DashboardCard = ({ order }) => {
                 </div>
               </div>
             </div>
-            <div className="self-center">
+            <div className="self-center flex items-center gap-2">
               {url ? (
-                <a href={url} target="_blank" rel="noreferrer" download
-                  className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg">
-                  <i className="bi bi-download"></i> Download
-                </a>
+                <>
+                  {streamUrl && (
+                    <button
+                      onClick={() => setNowPlaying({ name: product.name, url: streamUrl })}
+                      className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg"
+                    >
+                      <i className="bi bi-play-fill"></i> Watch Now
+                    </button>
+                  )}
+                  <a href={url} target="_blank" rel="noreferrer" download
+                    className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg">
+                    <i className="bi bi-download"></i> Download
+                  </a>
+                </>
               ) : (
                 <span className="text-sm text-gray-400 dark:text-gray-500">
                   <i className="bi bi-clock"></i> {isPaid ? "Processing..." : badge.label}
@@ -62,6 +77,8 @@ export const DashboardCard = ({ order }) => {
           </div>
         );
       })}
+
+      <VideoPlayerModal nowPlaying={nowPlaying} onClose={() => setNowPlaying(null)} />
     </div>
   )
 }

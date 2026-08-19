@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useRef, useMemo } from "react"
 import { Link } from "react-router-dom"
 import { getLatestOrder, getOrderStatusById } from "../../../services"
 import { useCart } from "../../../context"
@@ -51,8 +51,12 @@ export const OrderSuccess = ({ data }) => {
   // paid, "paid" once confirmed, "failed" if PayMongo says it failed, and
   // "timeout" if we polled for a while and still heard nothing back.
   const [paymentStatus, setPaymentStatus] = useState(data?.status === "paid" ? "paid" : "checking")
-  // FIX: start empty — populate AFTER order loads using order-scoped keys
-  const [downloadStatus, setDownloadStatus] = useState({})
+  // Only ever holds TRANSIENT, user-triggered states ("downloading"/"done")
+  // set by handleDownload below. Anything already marked done in a PREVIOUS
+  // visit (read from localStorage) is derived below via `previouslyDownloaded`
+  // instead of being synced in here — that avoids calling setState from
+  // inside an effect just to mirror something we can compute directly.
+  const [downloadOverrides, setDownloadOverrides] = useState({})
   const hasFetched = useRef(false)
   const hasCleared = useRef(false)
   const pollAttempts = useRef(0)
@@ -66,43 +70,7 @@ export const OrderSuccess = ({ data }) => {
     if (paymentStatus !== "paid" || hasCleared.current) return
     hasCleared.current = true
     clearCart()
-  }, [paymentStatus])
-
-  useEffect(() => {
-    if (hasFetched.current) return
-    hasFetched.current = true
-
-    if (data) {
-      setLoading(false)
-      if (data.status && data.status !== "paid") startPolling(data.id)
-      return
-    }
-
-    async function fetchOrder() {
-      try {
-        const latestOrder = await getLatestOrder()
-        setOrder(latestOrder)
-        if (latestOrder.status === "paid") {
-          setPaymentStatus("paid")
-        } else if (latestOrder.status === "failed") {
-          setPaymentStatus("failed")
-        } else {
-          // Still "pending" from our end — the webhook likely just hasn't
-          // landed yet (or the auto-redirect fired before it did). Poll
-          // instead of assuming success.
-          startPolling(latestOrder.id)
-        }
-      } catch (error) {
-        console.error("Failed to fetch order:", error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchOrder()
-
-    return () => clearTimeout(pollTimer.current)
-  }, [])
+  }, [paymentStatus, clearCart])
 
   function startPolling(orderId) {
     async function tick() {
@@ -134,26 +102,75 @@ export const OrderSuccess = ({ data }) => {
     pollTimer.current = setTimeout(tick, POLL_INTERVAL_MS)
   }
 
-  // FIX: once order is available, restore only THIS order's download history
+  // Intentionally run once on mount only (guarded by hasFetched, not by a
+  // `data` dependency): `data` is the order handed down from navigation
+  // state on first landing, and re-running this whenever its reference
+  // changes would re-trigger a fetch/poll cycle we already completed.
   useEffect(() => {
-    if (!order) return
+    if (hasFetched.current) return
+    hasFetched.current = true
+
+    if (data) {
+      if (data.status && data.status !== "paid") startPolling(data.id)
+      return
+    }
+
+    async function fetchOrder() {
+      try {
+        const latestOrder = await getLatestOrder()
+        setOrder(latestOrder)
+        if (latestOrder.status === "paid") {
+          setPaymentStatus("paid")
+        } else if (latestOrder.status === "failed") {
+          setPaymentStatus("failed")
+        } else {
+          // Still "pending" from our end — the webhook likely just hasn't
+          // landed yet (or the auto-redirect fired before it did). Poll
+          // instead of assuming success.
+          startPolling(latestOrder.id)
+        }
+      } catch (error) {
+        console.error("Failed to fetch order:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchOrder()
+
+    return () => clearTimeout(pollTimer.current)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // Derived (not synced-via-effect): which of this order's products were
+  // already downloaded in a PREVIOUS visit, read straight from localStorage
+  // and recomputed only when `order` changes. Using useMemo here instead of
+  // useEffect+setState avoids an extra render pass and the "setState
+  // synchronously within an effect" pitfall (cascading renders).
+  const previouslyDownloaded = useMemo(() => {
+    if (!order) return {}
     const downloaded = getDownloaded()
-    const initial = {}
+    const result = {}
     order.cart_list.forEach((product) => {
       const key = `${order.id}_${product.id}`
-      if (downloaded[key]) {
-        initial[product.id] = "done"
-      }
+      if (downloaded[key]) result[product.id] = true
     })
-    setDownloadStatus(initial)
+    return result
   }, [order])
 
+  // Effective status shown per product: an in-progress/just-finished download
+  // from THIS visit (downloadOverrides) takes priority; otherwise fall back
+  // to "done" if a previous visit already downloaded it.
+  function getDownloadStatus(productId) {
+    return downloadOverrides[productId] || (previouslyDownloaded[productId] ? "done" : undefined)
+  }
+
   function handleDownload(url, name, id) {
-    setDownloadStatus(prev => ({ ...prev, [id]: "downloading" }))
+    setDownloadOverrides(prev => ({ ...prev, [id]: "downloading" }))
 
     const markDone = (id) => {
       markDownloaded(order.id, id) // FIX: pass order.id for scoped key
-      setDownloadStatus(prev => ({ ...prev, [id]: "done" }))
+      setDownloadOverrides(prev => ({ ...prev, [id]: "done" }))
     }
 
     if (isGoogleDrive(url)) {
@@ -263,12 +280,13 @@ export const OrderSuccess = ({ data }) => {
       {!loading && order && (
         <div className="my-6 px-4">
           <div className="flex flex-col gap-4 items-center">
-            {order.cart_list.map((product) =>
-              product.dlUrl ? (
+            {order.cart_list.map((product) => {
+              const status = getDownloadStatus(product.id)
+              return product.dlUrl ? (
                 <div key={product.id} className="w-full max-w-sm">
 
                   {/* Default: show download button */}
-                  {!downloadStatus[product.id] && (
+                  {!status && (
                     <>
                       <button
                         onClick={() => handleDownload(product.dlUrl, product.name, product.id)}
@@ -286,7 +304,7 @@ export const OrderSuccess = ({ data }) => {
                   )}
 
                   {/* Downloading */}
-                  {downloadStatus[product.id] === "downloading" && (
+                  {status === "downloading" && (
                     <div className="flex items-center justify-center gap-2 text-blue-500 text-base py-3">
                       <i className="bi bi-arrow-repeat animate-spin"></i>
                       Downloading {product.name}...
@@ -294,7 +312,7 @@ export const OrderSuccess = ({ data }) => {
                   )}
 
                   {/* Done */}
-                  {downloadStatus[product.id] === "done" && (
+                  {status === "done" && (
                     <div className="flex items-center justify-center gap-2 text-green-500 text-base py-3">
                       <i className="bi bi-check-circle-fill"></i>
                       {product.name} downloaded successfully! ✅
@@ -307,7 +325,7 @@ export const OrderSuccess = ({ data }) => {
                   <i className="bi bi-clock mr-1"></i> {product.name} — Processing...
                 </span>
               )
-            )}
+            })}
           </div>
 
           <p className="text-base text-gray-300 dark:text-gray-500 mt-6">

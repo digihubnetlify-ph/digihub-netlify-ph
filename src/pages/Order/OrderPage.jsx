@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useTitle } from "../../hooks/useTitle";
 import { OrderSuccess } from "./components/OrderSuccess";
 import { OrderFail } from "./components/OrderFail";
@@ -6,7 +6,6 @@ import { OrderFail } from "./components/OrderFail";
 export const OrderPage = () => {
   useTitle("Order Summary");
   const { state } = useLocation();
-  const navigate = useNavigate();
 
   // If no state, PayMongo redirected here after payment
   if (!state) {

@@ -11,13 +11,10 @@ export const Header = () => {
   const [darkMode, setDarkMode] = useState(JSON.parse(localStorage.getItem("darkMode")) ?? true);
   const [searchSection, setSearchSection] = useState(true);
   const [dropdown, setDropdown] = useState(false);
-  // FIX: use Supabase session instead of sessionStorage for auth state
   const [isLoggedIn, setIsLoggedIn] = useState(!!sessionStorage.getItem("token"));
   const dropdownRef = useRef(null);
 
-  // FIX: listen to Supabase auth state — works for phone, email, OTP, token refresh
   useEffect(() => {
-    // Check real session on mount (handles mobile browser sessionStorage loss)
     supabase.auth.getSession().then(({ data: { session } }) => {
       setIsLoggedIn(!!session);
       if (session) {
@@ -29,7 +26,6 @@ export const Header = () => {
       }
     });
 
-    // Keep in sync when token refreshes, user logs in/out from anywhere
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setIsLoggedIn(!!session);
       if (session) {
@@ -84,12 +80,10 @@ export const Header = () => {
                 className="text-xs sm:text-2xl font-bold truncate max-w-[80px] sm:max-w-none"
                 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: "-0.02em" }}
               >
-                <span className="text-red-600">Digi</span>
+                <span className="text-[#FB651E]">Digi</span>
                 <span className="text-gray-900 dark:text-gray-100">Hub</span>
-                <span className="text-red-600">PH</span>
-                
+                <span className="text-[#FB651E]">PH</span>
               </span>
-
             </Link>
 
             {/* Right Side Icons */}
@@ -102,7 +96,7 @@ export const Header = () => {
                 className={`flex cursor-pointer flex-col items-center justify-center gap-0.5 w-8 sm:w-10 text-gray-700 dark:text-white bg-transparent border-none`}
               >
                 <span className={`text-xl flex items-center justify-center ${darkMode ? "bi bi-moon" : "bi bi-sun"}`}></span>
-                <span className="hidden sm:block text-[10px] leading-none text-center w-full">{darkMode ? "Dark" : "Light"}</span>
+                <span className="block text-[8px] sm:text-[10px] leading-none text-center w-full">{darkMode ? "Dark" : "Light"}</span>
               </button>
 
               {/* Search */}
@@ -112,7 +106,7 @@ export const Header = () => {
                 className={`flex cursor-pointer flex-col items-center justify-center gap-0.5 w-8 sm:w-10 text-gray-700 dark:text-white bg-transparent border-none`}
               >
                 <span className="text-xl bi bi-search flex items-center justify-center"></span>
-                <span className="hidden sm:block text-[10px] leading-none text-center w-full">Search</span>
+                <span className="block text-[8px] sm:text-[10px] leading-none text-center w-full">Search</span>
               </button>
 
               {/* Cart */}
@@ -125,7 +119,7 @@ export const Header = () => {
                     </span>
                   )}
                 </span>
-                <span className="hidden sm:block text-[10px] leading-none text-center w-full">Cart</span>
+                <span className="block text-[8px] sm:text-[10px] leading-none text-center w-full">Cart</span>
               </Link>
 
               {/* Account */}
@@ -136,7 +130,7 @@ export const Header = () => {
                   className="cursor-pointer flex flex-col items-center justify-center gap-0.5 w-8 sm:w-10 text-gray-700 dark:text-white bg-transparent border-none"
                 >
                   <span className="bi bi-person-circle text-xl flex items-center justify-center"></span>
-                  <span className="hidden sm:block text-[10px] leading-none text-center w-full">Account</span>
+                  <span className="block text-[8px] sm:text-[10px] leading-none text-center w-full">Account</span>
                 </button>
 
                 {dropdown && (isLoggedIn
@@ -149,7 +143,7 @@ export const Header = () => {
               {!isLoggedIn && (
                 <Link
                   to="/login"
-                  className="flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full transition-colors whitespace-nowrap"
+                  className="flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full transition-colors whitespace-nowrap"
                 >
                   <span className="bi bi-box-arrow-in-right"></span>
                   <span>Log In</span>

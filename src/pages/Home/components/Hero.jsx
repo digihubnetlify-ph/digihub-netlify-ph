@@ -78,7 +78,7 @@ export const Hero = () => {
         <div className="flex justify-center lg:justify-start">
           <Link
             to="/products"
-            className="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-semibold rounded-sm text-lg px-8 py-3 mb-1 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800 tracking-wide"
+            className="text-white bg-[#FB651E] hover:bg-[#e0570f] focus:ring-4 focus:ring-orange-300 font-semibold rounded-sm text-lg px-8 py-3 mb-1 dark:bg-[#FB651E] dark:hover:bg-[#e0570f] focus:outline-none dark:focus:ring-orange-900 tracking-wide transition-colors"
           >
             Explore!
           </Link>

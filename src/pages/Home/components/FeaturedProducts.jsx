@@ -26,7 +26,7 @@ export const FeaturedProducts = () => {
 
   return (
     <section className="my-10">
-      <h1 className="text-2xl text-center font-semibold dark:text-slate-100 mb-5 underline underline-offset-8">
+      <h1 className="text-2xl text-center font-semibold text-orange-600 dark:text-orange-500 mb-5 underline underline-offset-8">
         Featured Movies
       </h1>
       <div className="flex flex-wrap justify-center gap-3 sm:gap-4 px-4">

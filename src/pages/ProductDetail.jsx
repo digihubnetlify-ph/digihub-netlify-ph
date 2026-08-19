@@ -2,16 +2,20 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useTitle } from "../hooks/useTitle";
-import { Rating } from "../components";
+import { Rating, VideoPlayerModal } from "../components";
 import { useCart } from "../context";
-import { getProduct } from "../services";
+import { getProduct, getOwnedStreamUrl, toStreamUrl } from "../services";
 import { ProductDetailSkeleton } from "../components/Elements/Skeleton";
 
 export const ProductDetail = () => {
   const { cartList, addToCart, removeFromCart } = useCart();
-  const [inCart, setInCart] = useState(false);
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
+  // Only set once we've CONFIRMED this visitor paid for this exact product —
+  // never derived from cart state or a client-side guess. Gates PLAYBACK,
+  // not whether the button is visible (it's always visible, same price).
+  const [ownedStreamUrl, setOwnedStreamUrl] = useState(null);
+  const [nowPlaying, setNowPlaying] = useState(null); // { name, url } | null
   const { id } = useParams();
   useTitle(product.name);
 
@@ -30,9 +34,16 @@ export const ProductDetail = () => {
   }, [id]);
 
   useEffect(() => {
-    const productInCart = cartList.find(item => item.id === product.id);
-    setInCart(!!productInCart);
-  }, [cartList, product.id]);
+    // Only movies get Watch Online — skip the query entirely for others.
+    if (product.type !== "movie") return;
+    // Silent by design: an error here (e.g. not logged in) just means no
+    // Watch Online button — it shouldn't interrupt browsing with a toast.
+    getOwnedStreamUrl(id).then(setOwnedStreamUrl).catch(() => setOwnedStreamUrl(null));
+  }, [id, product.type]);
+
+  // Derived directly from cartList — no need for its own state/effect,
+  // which would otherwise cost an extra render every time cartList changes.
+  const inCart = cartList.some(item => item.id === product.id);
 
   if (loading) return <ProductDetailSkeleton />;
 
@@ -53,28 +64,80 @@ export const ProductDetail = () => {
             <p className="my-3">
               <span><Rating rating={product.rating} /></span>
             </p>
-            <p className="my-4 select-none">
-              {product.best_seller && <span className="font-semibold text-amber-500 border bg-amber-50 rounded-lg px-3 py-1 mr-2">BEST SELLER</span>}
-              {product.in_stock && <span className="font-semibold text-emerald-600 border bg-slate-100 rounded-lg px-3 py-1 mr-2">INSTOCK</span>}
-              {!product.in_stock && <span className="font-semibold text-rose-700 border bg-slate-100 rounded-lg px-3 py-1 mr-2">OUT OF STOCK</span>}
-              <span className="font-semibold text-blue-500 border bg-slate-100 rounded-lg px-3 py-1 mr-2">{product.size} MB</span>
-            </p>
-            <p className="my-3">
-              {!inCart && (
-                <button onClick={() => addToCart(product)} className={`inline-flex items-center py-2 px-5 text-lg font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 ${product.in_stock ? "" : "cursor-not-allowed"}`} disabled={product.in_stock ? "" : "disabled"}>
-                  Add To Cart <i className="ml-1 bi bi-plus-lg"></i>
+            <div className="flex flex-wrap gap-2 my-4 select-none">
+              {product.best_seller && <span className="font-semibold text-amber-500 border bg-amber-50 rounded-lg px-3 py-1 text-xs sm:text-sm whitespace-nowrap">BEST SELLER</span>}
+              {product.in_stock && <span className="font-semibold text-emerald-600 border bg-slate-100 rounded-lg px-3 py-1 text-xs sm:text-sm whitespace-nowrap">INSTOCK</span>}
+              {!product.in_stock && <span className="font-semibold text-rose-700 border bg-slate-100 rounded-lg px-3 py-1 text-xs sm:text-sm whitespace-nowrap">OUT OF STOCK</span>}
+              <span className="font-semibold text-blue-500 border bg-slate-100 rounded-lg px-3 py-1 text-xs sm:text-sm whitespace-nowrap">{product.size} MB</span>
+            </div>
+
+            {/* Preview = short trailer clip, safe for anyone, no purchase needed.
+                Watch Online = same price as Add to Cart, always visible.
+                Movie-only feature — Videos and Music skip straight to the
+                plain Add to Cart button.
+                - Already paid for it -> plays instantly (uses the CONFIRMED
+                  ownedStreamUrl, never a guess).
+                - Haven't bought it yet -> shows a toast telling them to add
+                  to cart and check out first. No auto-add, no silent
+                  cart mutation on their behalf.
+                Buttons stack vertically, same width, capped at max-w-xs. */}
+            <p className="my-3 flex flex-col items-stretch gap-2 max-w-xs">
+              {product.type === "movie" && product.trailer_url && (
+                <button
+                  onClick={() => setNowPlaying({ name: `${product.name} — Preview`, url: toStreamUrl(product.trailer_url) })}
+                  className="inline-flex items-center justify-center py-2 px-4 text-base font-medium text-center text-white bg-slate-600 rounded-lg hover:bg-slate-700"
+                >
+                  Preview <i className="ml-2 bi bi-film"></i>
                 </button>
               )}
-              {inCart && (
-                <button onClick={() => removeFromCart(product)} className={`inline-flex items-center py-2 px-5 text-lg font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 ${product.in_stock ? "" : "cursor-not-allowed"}`} disabled={product.in_stock ? "" : "disabled"}>
+
+              {product.type === "movie" && (
+                <button
+                  onClick={() => {
+                    if (ownedStreamUrl) {
+                      setNowPlaying({ name: product.name, url: ownedStreamUrl });
+                      return;
+                    }
+                    // No auto-add: don't silently stage a cart item on the
+                    // visitor's behalf. They have to click "Add To Cart"
+                    // themselves before checking out.
+                    toast.info("Add this to your cart and complete checkout to watch online.", {
+                      closeButton: true,
+                      position: "bottom-center",
+                    });
+                  }}
+                  className={`inline-flex items-center justify-center py-2 px-4 text-base font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 ${product.in_stock ? "" : "cursor-not-allowed opacity-60"}`}
+                  disabled={product.in_stock ? "" : "disabled"}
+                >
+                  {ownedStreamUrl ? "Watch Online" : `Watch Online — ₱${product.price}`} <i className="ml-2 bi bi-play-fill"></i>
+                </button>
+              )}
+
+              {!inCart ? (
+                <button
+                  onClick={() => addToCart(product)}
+                  className={`inline-flex items-center justify-center py-2 px-4 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 ${product.in_stock ? "" : "cursor-not-allowed"}`}
+                  disabled={product.in_stock ? "" : "disabled"}
+                >
+                  Add To Cart <i className="ml-1 bi bi-plus-lg"></i>
+                </button>
+              ) : (
+                <button
+                  onClick={() => removeFromCart(product)}
+                  className={`inline-flex items-center justify-center py-2 px-4 text-base font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 ${product.in_stock ? "" : "cursor-not-allowed"}`}
+                  disabled={product.in_stock ? "" : "disabled"}
+                >
                   Remove Item <i className="ml-1 bi bi-trash3"></i>
                 </button>
               )}
             </p>
+
             <p className="text-lg text-gray-900 dark:text-slate-200">{product.long_description}</p>
           </div>
         </div>
       </section>
+
+      <VideoPlayerModal nowPlaying={nowPlaying} onClose={() => setNowPlaying(null)} />
     </main>
   );
 };
