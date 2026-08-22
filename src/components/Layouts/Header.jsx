@@ -73,18 +73,19 @@ export const Header = () => {
         <nav className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-md">
           <div className="border-b border-slate-200 dark:border-b-0 flex flex-row justify-between items-center mx-auto max-w-screen-xl px-4 md:px-6 py-3">
 
-            {/* Logo + Brand */}
-            <Link to="/" className="flex items-center gap-1 min-w-0 flex-shrink overflow-hidden">
-              <img src={Logo} className="h-6 sm:h-20 flex-shrink-0" alt="Digital Movies Logo" />
-              <span
-                className="text-xs sm:text-2xl font-bold truncate max-w-[80px] sm:max-w-none"
-                style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: "-0.02em" }}
-              >
-                <span className="text-[#FB651E]">Digi</span>
-                <span className="text-gray-900 dark:text-gray-100">Hub</span>
-                <span className="text-[#FB651E]">PH</span>
-              </span>
-            </Link>
+            <div className="flex items-center min-w-0 flex-shrink">
+              <Link to="/" className="flex items-center gap-1 min-w-0 flex-shrink overflow-hidden">
+                <img src={Logo} className="h-6 sm:h-32 flex-shrink-0" alt="Digital Movies Logo" />
+                <span
+                  className="text-xs sm:text-4xl font-bold truncate max-w-[80px] sm:max-w-none"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: "-0.02em" }}
+                >
+                  <span className="text-[#FB651E]">Digi</span>
+                  <span className="text-gray-900 dark:text-gray-100">Hub</span>
+                  <span className="text-[#FB651E]">PH</span>
+                </span>
+              </Link>
+            </div>
 
             {/* Right Side Icons */}
             <div className="flex flex-row items-center gap-1 sm:gap-5 flex-shrink-0 relative">
@@ -93,33 +94,33 @@ export const Header = () => {
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 title={darkMode ? "Light Mode" : "Dark Mode"}
-                className={`flex cursor-pointer flex-col items-center justify-center gap-0.5 w-8 sm:w-10 text-gray-700 dark:text-white bg-transparent border-none`}
+                className={`flex cursor-pointer flex-col items-center justify-center gap-0.5 w-6 sm:w-16 text-black dark:text-white hover:text-orange-500 dark:hover:text-orange-400 transition-colors bg-transparent border-none`}
               >
-                <span className={`text-xl flex items-center justify-center ${darkMode ? "bi bi-moon" : "bi bi-sun"}`}></span>
-                <span className="block text-[8px] sm:text-[10px] leading-none text-center w-full">{darkMode ? "Dark" : "Light"}</span>
+                <span className={`text-sm sm:text-4xl flex items-center justify-center ${darkMode ? "bi bi-moon" : "bi bi-sun"}`}></span>
+                <span className="block text-[6px] sm:text-sm leading-none text-center w-full">{darkMode ? "Dark" : "Light"}</span>
               </button>
 
               {/* Search */}
               <button
                 onClick={() => setSearchSection(!searchSection)}
                 title="Search"
-                className={`flex cursor-pointer flex-col items-center justify-center gap-0.5 w-8 sm:w-10 text-gray-700 dark:text-white bg-transparent border-none`}
+                className={`flex cursor-pointer flex-col items-center justify-center gap-0.5 w-6 sm:w-16 text-black dark:text-white hover:text-orange-500 dark:hover:text-orange-400 transition-colors bg-transparent border-none`}
               >
-                <span className="text-xl bi bi-search flex items-center justify-center"></span>
-                <span className="block text-[8px] sm:text-[10px] leading-none text-center w-full">Search</span>
+                <span className="text-sm sm:text-4xl bi bi-search flex items-center justify-center"></span>
+                <span className="block text-[6px] sm:text-sm leading-none text-center w-full">Search</span>
               </button>
 
               {/* Cart */}
-              <Link to="/cart" title="Cart" className={`flex flex-col items-center justify-center gap-0.5 w-8 sm:w-10 text-gray-700 dark:text-white`}>
-                <span className="relative inline-flex items-center justify-center w-6 h-6">
-                  <span className="text-xl bi bi-cart-fill"></span>
+              <Link to="/cart" title="Cart" className={`flex flex-col items-center justify-center gap-0.5 w-6 sm:w-16 text-black dark:text-white hover:text-orange-500 dark:hover:text-orange-400 transition-colors`}>
+                <span className="relative inline-flex items-center justify-center w-4 h-4 sm:w-10 sm:h-10">
+                  <span className="text-sm sm:text-4xl bi bi-cart-fill"></span>
                   {cartList.length > 0 && (
                     <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">
                       {cartList.length}
                     </span>
                   )}
                 </span>
-                <span className="block text-[8px] sm:text-[10px] leading-none text-center w-full">Cart</span>
+                <span className="block text-[6px] sm:text-sm leading-none text-center w-full">Cart</span>
               </Link>
 
               {/* Account */}
@@ -127,10 +128,10 @@ export const Header = () => {
                 <button
                   onClick={() => setDropdown(!dropdown)}
                   title="Account"
-                  className="cursor-pointer flex flex-col items-center justify-center gap-0.5 w-8 sm:w-10 text-gray-700 dark:text-white bg-transparent border-none"
+                  className="cursor-pointer flex flex-col items-center justify-center gap-0.5 w-6 sm:w-16 text-black dark:text-white hover:text-orange-500 dark:hover:text-orange-400 transition-colors bg-transparent border-none"
                 >
-                  <span className="bi bi-person-circle text-xl flex items-center justify-center"></span>
-                  <span className="block text-[8px] sm:text-[10px] leading-none text-center w-full">Account</span>
+                  <span className="bi bi-person-circle text-sm sm:text-4xl flex items-center justify-center text-orange-600 dark:text-orange-400"></span>
+                  <span className="block text-[6px] sm:text-sm leading-none text-center w-full">Account</span>
                 </button>
 
                 {dropdown && (isLoggedIn

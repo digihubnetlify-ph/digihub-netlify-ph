@@ -66,7 +66,7 @@ export const ProductCard = ({ product, compact = false }) => {
   if (compact) {
     return (
       <div className="flex flex-col h-full bg-white dark:bg-gray-900 rounded-lg overflow-hidden hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200 group cursor-pointer w-[calc(50%-0.375rem)] sm:w-40 md:w-44">
-        <PosterWrapper hasTrailer={hasTrailer} onPreview={handlePreview} id={id} name={name} className="relative block overflow-hidden rounded-lg">
+        <PosterWrapper hasTrailer={hasTrailer} onPreview={handlePreview} id={id} name={name} className="relative block overflow-hidden rounded-lg bg-black">
           {best_seller && (
             <span className="absolute top-1.5 left-1.5 z-10 px-2 py-0.5 bg-orange-500 text-white text-xs font-semibold rounded">
               🔥
@@ -81,6 +81,7 @@ export const ProductCard = ({ product, compact = false }) => {
             className="w-full aspect-[2/3] object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
             src={poster}
             alt={name}
+            onError={(e) => { e.currentTarget.style.visibility = "hidden" }}
           />
           <span className="absolute bottom-1.5 right-1.5 bg-black bg-opacity-80 text-white text-xs font-bold px-2 py-1 rounded">
             ₱{price.toLocaleString()}
@@ -120,7 +121,14 @@ export const ProductCard = ({ product, compact = false }) => {
               </div>
             )}
 
-            {!inCart ? (
+            {ownedStreamUrl ? (
+              <button
+                disabled
+                className="w-full text-sm sm:text-xs bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 font-medium px-2 py-1.5 sm:py-1 rounded-full mt-1 cursor-default"
+              >
+                <i className="bi bi-check-circle-fill mr-1"></i>Purchased
+              </button>
+            ) : !inCart ? (
               <button
                 onClick={() => addToCart(product)}
                 disabled={!product.in_stock}
@@ -217,7 +225,14 @@ export const ProductCard = ({ product, compact = false }) => {
           )}
 
           <div className="max-w-xs">
-            {!inCart ? (
+            {ownedStreamUrl ? (
+              <button
+                disabled
+                className="w-full text-xs bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 font-medium px-3 py-1.5 rounded-full cursor-default"
+              >
+                <i className="bi bi-check-circle-fill mr-1"></i>Purchased
+              </button>
+            ) : !inCart ? (
               <button
                 onClick={() => addToCart(product)}
                 disabled={!product.in_stock}

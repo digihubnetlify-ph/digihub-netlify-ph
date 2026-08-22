@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 
-const CONTACT_EMAIL = "support@digihubph.com"; // TODO: replace with your real business email
+const CONTACT_EMAIL = "digihub.netlify@gmail.com"; // TODO: replace with your real business email
 
 // Opens Gmail compose (web) in a new tab instead of the OS/Outlook default mail handler
 const GMAIL_COMPOSE_URL = `https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_EMAIL}`;
 
 // TODO: replace each URL below with your actual page/profile links
 const SOCIAL_LINKS = {
-  facebook: "https://facebook.com/",
+  facebook: "https://www.facebook.com/profile.php?id=61592774266502",
   instagram: "https://instagram.com/",
   twitter: "https://twitter.com/",
   github: "https://github.com/",
@@ -20,10 +20,10 @@ export const Footer = () => {
             <span className="text-sm text-gray-500 dark:text-gray-300"><Link to="/" className="hover:underline">DigiHub</Link>. All Rights Reserved. © 2026.</span>
 
             <p className="text-sm text-gray-400 dark:text-gray-300 mt-3 md:mt-0 md:mx-4">
-                For Questions. Suggestions. Comments. and Media Requests:{" "}
-                {/* <a href={GMAIL_COMPOSE_URL} target="_blank" rel="noopener noreferrer" className="text-gray-500 dark:text-gray-300 hover:underline hover:text-gray-700 dark:hover:text-gray-300">
+                <span className="text-orange-600 dark:text-orange-400 font-medium">For Questions. Suggestions. Comments. and Media Requests:</span>{" "}
+                <a href={GMAIL_COMPOSE_URL} target="_blank" rel="noopener noreferrer" className="text-gray-500 dark:text-gray-300 hover:underline hover:text-gray-700 dark:hover:text-gray-300">
                     {CONTACT_EMAIL}
-                </a> */}
+                </a>
             </p>
 
             <div className="flex justify-center mt-4 space-x-6 md:mt-0">

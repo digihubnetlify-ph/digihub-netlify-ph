@@ -34,12 +34,14 @@ export const ProductDetail = () => {
   }, [id]);
 
   useEffect(() => {
-    // Only movies get Watch Online — skip the query entirely for others.
-    if (product.type !== "movie") return;
+    // Checked for every product type — not just movies — since it also
+    // drives the "Purchased" badge on the Add to Cart button below (Watch
+    // Online itself stays movie-only via its own type check above).
     // Silent by design: an error here (e.g. not logged in) just means no
-    // Watch Online button — it shouldn't interrupt browsing with a toast.
+    // Watch Online / Purchased state — it shouldn't interrupt browsing
+    // with a toast.
     getOwnedStreamUrl(id).then(setOwnedStreamUrl).catch(() => setOwnedStreamUrl(null));
-  }, [id, product.type]);
+  }, [id]);
 
   // Derived directly from cartList — no need for its own state/effect,
   // which would otherwise cost an extra render every time cartList changes.
@@ -113,7 +115,14 @@ export const ProductDetail = () => {
                 </button>
               )}
 
-              {!inCart ? (
+              {ownedStreamUrl ? (
+                <button
+                  disabled
+                  className="inline-flex items-center justify-center py-2 px-4 text-base font-medium text-center bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 rounded-lg cursor-default"
+                >
+                  Purchased <i className="ml-1 bi bi-check-circle-fill"></i>
+                </button>
+              ) : !inCart ? (
                 <button
                   onClick={() => addToCart(product)}
                   className={`inline-flex items-center justify-center py-2 px-4 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 ${product.in_stock ? "" : "cursor-not-allowed"}`}

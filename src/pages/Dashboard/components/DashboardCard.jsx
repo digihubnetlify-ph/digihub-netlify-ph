@@ -1,13 +1,8 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { VideoPlayerModal } from "../../../components"
+import { Checkout } from "../../Cart/components/Checkout"
 
-// Orders sit as "pending" until PayMongo's webhook confirms payment — which,
-// per the redirect-reliability issue, may land a while after (or even
-// without) the customer being bounced back to the site. This card is the
-// safety net: it reflects the REAL order status from the DB, so a pending
-// order never shows a working download button, and a paid one always will
-// once the webhook has run — whether or not the auto-redirect ever fired.
 const STATUS_BADGE = {
   paid: { label: "Paid", className: "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300" },
   pending: { label: "Payment pending", className: "bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300" },
@@ -17,8 +12,9 @@ const STATUS_BADGE = {
 export const DashboardCard = ({ order }) => {
   const badge = STATUS_BADGE[order.status] || STATUS_BADGE.pending
   const isPaid = order.status === "paid"
-  // { name, url } of whichever purchased title is currently playing, or null
+  const canRetry = order.status === "pending" || order.status === "failed"
   const [nowPlaying, setNowPlaying] = useState(null)
+  const [showCheckout, setShowCheckout] = useState(false)
 
   return (
     <div className="max-w-4xl m-auto p-2 mb-5 border dark:border-slate-700">
@@ -31,7 +27,7 @@ export const DashboardCard = ({ order }) => {
         <p className="text-center text-xs text-gray-400 dark:text-gray-500 -mt-3 mb-3">
           {order.status === "failed"
             ? "This payment didn't go through — no charge was made."
-            : "We're still confirming this payment. This updates automatically once it's done — no action needed."}
+            : "Still waiting for payment. Already paid? This updates automatically — no need to pay twice."}
         </p>
       )}
       {order.cart_list.map((product) => {
@@ -52,22 +48,29 @@ export const DashboardCard = ({ order }) => {
                 </div>
               </div>
             </div>
-            <div className="self-center flex items-center gap-2">
+            <div className="self-center flex flex-col items-end gap-2">
               {url ? (
                 <>
                   {streamUrl && (
                     <button
                       onClick={() => setNowPlaying({ name: product.name, url: streamUrl })}
-                      className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg"
+                      className="w-32 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg whitespace-nowrap"
                     >
                       <i className="bi bi-play-fill"></i> Watch Now
                     </button>
                   )}
                   <a href={url} target="_blank" rel="noreferrer" download
-                    className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg">
+                    className="w-32 flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg">
                     <i className="bi bi-download"></i> Download
                   </a>
                 </>
+              ) : canRetry ? (
+                <button
+                  onClick={() => setShowCheckout(true)}
+                  className="flex items-center gap-2 bg-red-800 hover:bg-red-900 text-white text-sm font-medium px-4 py-2 rounded-lg"
+                >
+                  <i className="bi bi-lock-fill"></i> Pay Now
+                </button>
               ) : (
                 <span className="text-sm text-gray-400 dark:text-gray-500">
                   <i className="bi bi-clock"></i> {isPaid ? "Processing..." : badge.label}
@@ -79,6 +82,7 @@ export const DashboardCard = ({ order }) => {
       })}
 
       <VideoPlayerModal nowPlaying={nowPlaying} onClose={() => setNowPlaying(null)} />
+      {showCheckout && <Checkout setCheckout={setShowCheckout} existingOrder={order} />}
     </div>
   )
 }
