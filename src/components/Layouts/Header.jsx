@@ -75,9 +75,9 @@ export const Header = () => {
 
             <div className="flex items-center min-w-0 flex-shrink">
               <Link to="/" className="flex items-center gap-1 min-w-0 flex-shrink overflow-hidden">
-                <img src={Logo} className="h-6 sm:h-32 flex-shrink-0" alt="Digital Movies Logo" />
+                <img src={Logo} className="h-7 sm:h-32 flex-shrink-0" alt="Digital Movies Logo" />
                 <span
-                  className="text-xs sm:text-4xl font-bold truncate max-w-[80px] sm:max-w-none"
+                  className="text-sm sm:text-4xl font-bold truncate max-w-[100px] sm:max-w-none"
                   style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: "-0.02em" }}
                 >
                   <span className="text-[#FB651E]">Digi</span>
@@ -94,33 +94,33 @@ export const Header = () => {
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 title={darkMode ? "Light Mode" : "Dark Mode"}
-                className={`flex cursor-pointer flex-col items-center justify-center gap-0.5 w-6 sm:w-16 text-black dark:text-white hover:text-orange-500 dark:hover:text-orange-400 transition-colors bg-transparent border-none`}
+                className={`flex cursor-pointer flex-col items-center justify-center gap-0.5 w-7 sm:w-16 text-black dark:text-white hover:text-orange-500 dark:hover:text-orange-400 transition-colors bg-transparent border-none`}
               >
-                <span className={`text-sm sm:text-4xl flex items-center justify-center ${darkMode ? "bi bi-moon" : "bi bi-sun"}`}></span>
-                <span className="block text-[6px] sm:text-sm leading-none text-center w-full">{darkMode ? "Dark" : "Light"}</span>
+                <span className={`text-base sm:text-4xl flex items-center justify-center ${darkMode ? "bi bi-moon" : "bi bi-sun"}`}></span>
+                <span className="block text-[7px] sm:text-sm leading-none text-center w-full">{darkMode ? "Dark" : "Light"}</span>
               </button>
 
               {/* Search */}
               <button
                 onClick={() => setSearchSection(!searchSection)}
                 title="Search"
-                className={`flex cursor-pointer flex-col items-center justify-center gap-0.5 w-6 sm:w-16 text-black dark:text-white hover:text-orange-500 dark:hover:text-orange-400 transition-colors bg-transparent border-none`}
+                className={`flex cursor-pointer flex-col items-center justify-center gap-0.5 w-7 sm:w-16 text-black dark:text-white hover:text-orange-500 dark:hover:text-orange-400 transition-colors bg-transparent border-none`}
               >
-                <span className="text-sm sm:text-4xl bi bi-search flex items-center justify-center"></span>
-                <span className="block text-[6px] sm:text-sm leading-none text-center w-full">Search</span>
+                <span className="text-base sm:text-4xl bi bi-search flex items-center justify-center"></span>
+                <span className="block text-[7px] sm:text-sm leading-none text-center w-full">Search</span>
               </button>
 
               {/* Cart */}
-              <Link to="/cart" title="Cart" className={`flex flex-col items-center justify-center gap-0.5 w-6 sm:w-16 text-black dark:text-white hover:text-orange-500 dark:hover:text-orange-400 transition-colors`}>
-                <span className="relative inline-flex items-center justify-center w-4 h-4 sm:w-10 sm:h-10">
-                  <span className="text-sm sm:text-4xl bi bi-cart-fill"></span>
+              <Link to="/cart" title="Cart" className={`flex flex-col items-center justify-center gap-0.5 w-7 sm:w-16 text-black dark:text-white hover:text-orange-500 dark:hover:text-orange-400 transition-colors`}>
+                <span className="relative inline-flex items-center justify-center w-5 h-5 sm:w-10 sm:h-10">
+                  <span className="text-base sm:text-4xl bi bi-cart-fill"></span>
                   {cartList.length > 0 && (
                     <span className="absolute -top-2 -right-2 bg-rose-500 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">
                       {cartList.length}
                     </span>
                   )}
                 </span>
-                <span className="block text-[6px] sm:text-sm leading-none text-center w-full">Cart</span>
+                <span className="block text-[7px] sm:text-sm leading-none text-center w-full">Cart</span>
               </Link>
 
               {/* Account */}
@@ -128,10 +128,10 @@ export const Header = () => {
                 <button
                   onClick={() => setDropdown(!dropdown)}
                   title="Account"
-                  className="cursor-pointer flex flex-col items-center justify-center gap-0.5 w-6 sm:w-16 text-black dark:text-white hover:text-orange-500 dark:hover:text-orange-400 transition-colors bg-transparent border-none"
+                  className="cursor-pointer flex flex-col items-center justify-center gap-0.5 w-7 sm:w-16 text-black dark:text-white hover:text-orange-500 dark:hover:text-orange-400 transition-colors bg-transparent border-none"
                 >
-                  <span className="bi bi-person-circle text-sm sm:text-4xl flex items-center justify-center text-orange-600 dark:text-orange-400"></span>
-                  <span className="block text-[6px] sm:text-sm leading-none text-center w-full">Account</span>
+                  <span className="bi bi-person-circle text-base sm:text-4xl flex items-center justify-center text-orange-600 dark:text-orange-400"></span>
+                  <span className="block text-[7px] sm:text-sm leading-none text-center w-full">Account</span>
                 </button>
 
                 {dropdown && (isLoggedIn

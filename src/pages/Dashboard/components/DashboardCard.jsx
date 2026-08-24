@@ -32,7 +32,12 @@ export const DashboardCard = ({ order }) => {
       )}
       {order.cart_list.map((product) => {
         const url = isPaid ? product.dlUrl : null;
-        const streamUrl = isPaid ? product.streamUrl : null;
+        // "Watch Now" opens the video/audio player — only meaningful for
+        // movie/video/music. Resources (templates, tutorials, documents,
+        // etc.) are downloadable files the player can't open, so they only
+        // ever get the Download button.
+        const isPlayable = ["movie", "video", "music"].includes(product.type);
+        const streamUrl = isPaid && isPlayable ? product.streamUrl : null;
         return (
           <div key={product.id} className="flex flex-wrap justify-between max-w-4xl m-auto p-2 my-5">
             <div className="flex">

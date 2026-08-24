@@ -91,9 +91,8 @@ export const VideoPlayerModal = ({ nowPlaying, onClose }) => {
             src={embed.src}
             controls
             autoPlay
-            crossOrigin="anonymous"
             onError={() => setVideoError(true)}
-            className="w-full max-h-[80vh] rounded-lg bg-black"
+            className="w-full aspect-video max-h-[80vh] rounded-lg bg-black"
           >
             {/* Optional subtitle track — only appears if a .vtt caption file
                 is set on this item (nowPlaying.subtitleUrl). No effect for

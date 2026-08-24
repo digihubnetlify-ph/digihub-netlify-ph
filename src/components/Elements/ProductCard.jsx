@@ -188,7 +188,7 @@ export const ProductCard = ({ product, compact = false }) => {
               </h3>
             </Link>
             <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-1 mb-1">
-              DigiHub
+              {product.category || "DigiHub"}
             </p>
             <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-2">
               {overview}
