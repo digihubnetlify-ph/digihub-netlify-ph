@@ -81,7 +81,7 @@ export const Header = () => {
                   style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, letterSpacing: "-0.02em" }}
                 >
                   <span className="text-[#FB651E]">Digi</span>
-                  <span className="text-gray-900 dark:text-gray-100">Hub</span>
+                  <span className="text-gray-900 dark:text-gray-100">hub</span>
                   <span className="text-[#FB651E]">PH</span>
                 </span>
               </Link>
