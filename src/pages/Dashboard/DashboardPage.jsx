@@ -15,7 +15,10 @@ export const DashboardPage = () => {
     async function fetchOrders() {
       try {
         const data = await getUserOrders();
-        setOrders(data);
+        // Cancelled orders stay in the DB for record-keeping, but there's
+        // nothing actionable left for the user to do with one — hide them
+        // from view here rather than showing a stale/confusing badge.
+        setOrders(data.filter((order) => order.status !== "cancelled"));
       } catch (error) {
         toast.error(error.message, { closeButton: true, position: "bottom-center" });
       } finally {
@@ -35,7 +38,13 @@ export const DashboardPage = () => {
 
       <section>
         {orders.length > 0 && orders.map((order) => (
-          <DashboardCard key={order.id} order={order} />
+          <DashboardCard
+            key={order.id}
+            order={order}
+            onCancelled={(cancelledId) =>
+              setOrders((prev) => prev.filter((o) => o.id !== cancelledId))
+            }
+          />
         ))}
       </section>
 

@@ -80,6 +80,47 @@ export async function getUserOrders() {
 }
 
 export async function createOrder(cartList, total, user) {
+  // FIX (duplicate orders): every checkout click used to insert a brand new
+  // row, even for items the user already owns or already has a pending
+  // order for. That's how the dashboard ended up with dozens of stale
+  // "pending" rows for the same product, and would let a customer pay twice
+  // for something they already bought. Guard against both cases before
+  // inserting anything.
+  const { data: existingOrders, error: existingError } = await supabase
+    .from('orders')
+    .select('*')
+    .eq('user_id', user.id)
+    .in('status', ['paid', 'pending'])
+
+  if (existingError) throw { message: existingError.message }
+
+  // 1. Block re-purchasing something already paid for.
+  const ownedIds = new Set(
+    (existingOrders || [])
+      .filter(o => o.status === 'paid')
+      .flatMap(o => (o.cart_list || []).map(item => item.id))
+  )
+  const alreadyOwned = cartList.filter(item => ownedIds.has(item.id))
+  if (alreadyOwned.length > 0) {
+    const names = alreadyOwned.map(item => item.name || `#${item.id}`).join(', ')
+    throw { message: `You already own: ${names}. Check your Dashboard to watch or download.` }
+  }
+
+  // 2. Reuse an existing pending order for the exact same set of items
+  // instead of creating a new duplicate row every time checkout is retried.
+  const productIds = cartList.map(item => item.id).slice().sort()
+  const matchingPending = (existingOrders || [])
+    .filter(o => o.status === 'pending')
+    .find(order => {
+      const existingIds = (order.cart_list || []).map(item => item.id).slice().sort()
+      return (
+        existingIds.length === productIds.length &&
+        existingIds.every((id, i) => id === productIds[i])
+      )
+    })
+
+  if (matchingPending) return matchingPending
+
   // FIX: use the authenticated user's id directly (already passed in from
   // getUser()) instead of a sessionStorage mirror — that mirror can fall
   // out of sync (cleared by the browser, race on page load) and silently
@@ -207,4 +248,29 @@ export async function getLatestOrder() {
       return { ...item, dlUrl: url, streamUrl: toStreamUrl(url) }
     })
   }
+}
+// Cancels the CURRENT user's own order, but only from "pending" — the RLS
+// policy on the DB side enforces this too (belt and suspenders), so even a
+// tampered client-side call can't cancel someone else's order or one that's
+// already paid/failed. Returns the updated row.
+export async function cancelOrder(orderId) {
+  const { data: { user }, error: userError } = await supabase.auth.getUser()
+  if (userError || !user) throw { message: "Not logged in" }
+
+  const { data, error } = await supabase
+    .from('orders')
+    .update({ status: 'cancelled' })
+    .eq('id', orderId)
+    .eq('user_id', user.id)
+    .eq('status', 'pending')
+    .select()
+
+  if (error) throw { message: error.message }
+  // A missing row here means it wasn't pending/theirs anymore (e.g. the
+  // webhook just confirmed payment moments ago) — treat that as "nothing to
+  // cancel" rather than a hard error.
+  if (!data || data.length === 0) {
+    throw { message: "This order can no longer be cancelled — it may have just been paid." }
+  }
+  return data[0]
 }

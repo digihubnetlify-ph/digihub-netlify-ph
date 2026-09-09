@@ -1,7 +1,9 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import { toast } from "react-toastify"
 import { VideoPlayerModal } from "../../../components"
 import { Checkout } from "../../Cart/components/Checkout"
+import { cancelOrder } from "../../../services"
 
 const STATUS_BADGE = {
   paid: { label: "Paid", className: "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300" },
@@ -9,12 +11,28 @@ const STATUS_BADGE = {
   failed: { label: "Payment failed", className: "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300" },
 }
 
-export const DashboardCard = ({ order }) => {
+export const DashboardCard = ({ order, onCancelled }) => {
   const badge = STATUS_BADGE[order.status] || STATUS_BADGE.pending
   const isPaid = order.status === "paid"
   const canRetry = order.status === "pending" || order.status === "failed"
+  const canCancel = order.status === "pending"
   const [nowPlaying, setNowPlaying] = useState(null)
   const [showCheckout, setShowCheckout] = useState(false)
+  const [cancelling, setCancelling] = useState(false)
+
+  async function handleCancel() {
+    if (!window.confirm("Cancel this order? This can't be undone.")) return
+    setCancelling(true)
+    try {
+      await cancelOrder(order.id)
+      toast.success("Order cancelled.", { position: "bottom-center" })
+      onCancelled?.(order.id)
+    } catch (error) {
+      toast.error(error.message, { closeButton: true, position: "bottom-center" })
+    } finally {
+      setCancelling(false)
+    }
+  }
 
   return (
     <div className="max-w-4xl m-auto p-2 mb-5 border dark:border-slate-700">
@@ -61,7 +79,7 @@ export const DashboardCard = ({ order }) => {
                       onClick={() => setNowPlaying({ name: product.name, url: streamUrl })}
                       className="w-32 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg whitespace-nowrap"
                     >
-                      <i className="bi bi-play-fill"></i> Watch Now
+                      <i className="bi bi-play-fill"></i> {product.type === "music" ? "Play" : "Watch Now"}
                     </button>
                   )}
                   <a href={url} target="_blank" rel="noreferrer" download
@@ -70,12 +88,24 @@ export const DashboardCard = ({ order }) => {
                   </a>
                 </>
               ) : canRetry ? (
-                <button
-                  onClick={() => setShowCheckout(true)}
-                  className="flex items-center gap-2 bg-red-800 hover:bg-red-900 text-white text-sm font-medium px-4 py-2 rounded-lg"
-                >
-                  <i className="bi bi-lock-fill"></i> Pay Now
-                </button>
+                <>
+                  <button
+                    onClick={() => setShowCheckout(true)}
+                    className="w-32 flex items-center justify-center gap-2 bg-red-800 hover:bg-red-900 text-white text-sm font-medium px-4 py-2 rounded-lg"
+                  >
+                    <i className="bi bi-lock-fill"></i> Pay Now
+                  </button>
+                  {canCancel && (
+                    <button
+                      onClick={handleCancel}
+                      disabled={cancelling}
+                      className="w-32 flex items-center justify-center gap-2 bg-transparent border border-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-300 text-sm font-medium px-4 py-2 rounded-lg disabled:opacity-50"
+                    >
+                      <i className={cancelling ? "bi bi-arrow-repeat animate-spin" : "bi bi-x-lg"}></i>
+                      {cancelling ? "Cancelling..." : "Cancel"}
+                    </button>
+                  )}
+                </>
               ) : (
                 <span className="text-sm text-gray-400 dark:text-gray-500">
                   <i className="bi bi-clock"></i> {isPaid ? "Processing..." : badge.label}
