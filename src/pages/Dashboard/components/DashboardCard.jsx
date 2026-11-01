@@ -11,6 +11,21 @@ const STATUS_BADGE = {
   failed: { label: "Payment failed", className: "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300" },
 }
 
+// e.g. "Nov 2, 2026, 3:45 PM" — always shown in Philippine time.
+// Supabase "timestamp without time zone" columns come back with no Z/offset,
+// which the browser would read as LOCAL time. They're stored in UTC, so tag
+// them as UTC before converting to Manila time.
+const formatOrderDate = (iso) => {
+  const timePart = iso.split("T")[1] || ""
+  const hasZone = /(Z|[+-]\d{2}(:?\d{2})?)$/.test(timePart)
+  const date = new Date(iso.includes("T") && !hasZone ? iso + "Z" : iso)
+  return date.toLocaleString("en-PH", {
+    dateStyle: "medium",
+    timeStyle: "short",
+    timeZone: "Asia/Manila",
+  })
+}
+
 export const DashboardCard = ({ order, onCancelled }) => {
   const badge = STATUS_BADGE[order.status] || STATUS_BADGE.pending
   const isPaid = order.status === "paid"
@@ -37,7 +52,14 @@ export const DashboardCard = ({ order, onCancelled }) => {
   return (
     <div className="max-w-4xl m-auto p-2 mb-5 border dark:border-slate-700">
       <div className="flex justify-between items-center text-sm m-2 font-bold dark:text-slate-200">
-        <span>Order Id: {order.id}</span>
+        <div className="flex flex-col">
+          <span>Order Id: {order.id}</span>
+          {order.created_at && (
+            <span className="text-xs font-normal text-gray-500 dark:text-gray-400">
+              {formatOrderDate(order.created_at)}
+            </span>
+          )}
+        </div>
         <span className={`px-2 py-1 rounded-full text-xs font-semibold ${badge.className}`}>{badge.label}</span>
         <span>Total: ₱{order.amount_paid.toLocaleString()}</span>
       </div>
